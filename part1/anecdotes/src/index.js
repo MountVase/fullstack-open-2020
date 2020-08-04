@@ -30,24 +30,29 @@ const App = (props) => {
     <>
     <h1>Anecdote of the day</h1>
     <div>
-    <div> {props.anecdotes[selected]} </div>
-    <div>has {votes[selected]} votes </div>
-
+    <DisplayAnecdote anecdote={anecdotes[selected]} votes={votes[selected]}/>
       <button onClick={handleVote}> vote</button>
       <button onClick={handleAnecdote}> next anecdote</button>
     </div>
     <h1>Anecdote with the most votes</h1>
-    <div>{props.anecdotes[maxVotes]}</div>
-    <div>has {votes[maxVotes]} votes</div>
+    <DisplayAnecdote anecdote={anecdotes[maxVotes]} votes={votes[maxVotes]} />
     </>
   )
 }
 
-
+// component to display anecdotes
+const DisplayAnecdote = ({anecdote, votes}) => {
+  return (
+    <div>{anecdote} <br/>
+  has {votes} votes</div>
+  )
+  
+}
 
 
 const rndInt = (liste) => Math.floor(Math.random() * liste.length)
 const lisst = ["je", "boi", "test", "this", "out"]
+
 
 const anecdotes = [
   'If it hurts, do it more often',
