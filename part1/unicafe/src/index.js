@@ -26,7 +26,7 @@ const Header = props => <h1>{props.text}</h1>
 
 const Button = ({handleClick, text}) => (<button onClick={handleClick}>{text}</button>)
 
-
+//Perhaps separate Statistics and Feedback??
 const Statistic = ({text, count}) => {
   return (
   <p>{text} {count}</p>
@@ -61,7 +61,7 @@ const Statistics = ({good, neutral, bad}) => {
 
 
 const average = (good, neutral, bad) => (good-bad)/(good+neutral+bad)
-const positive = (good, neutral, bad) => (good/(good+neutral+bad)*100).toString() + " %"
+const positive = (good, neutral, bad) => (good/(good+neutral+bad)*100) + " %"
 
 
 ReactDOM.render(<App />, 
