@@ -2,11 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Course from './components/Course'
 
-const Header = ({ course }) => {
-  return (
-    <h1>{course.name}</h1>
-  )
-}
+
 
 const Total = ({ course }) => {
   const sum = course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises
@@ -15,13 +11,14 @@ const Total = ({ course }) => {
   ) 
 }
 
-const Part = (props) => {
+
+const Header = ({ course }) => {
   return (
-    <p>
-      {props.part.name} {props.part.exercises}
-    </p>    
+    <h1>{course.name}</h1>
   )
 }
+
+
 
 const Content = ({ course }) => {
   return (
@@ -32,7 +29,13 @@ const Content = ({ course }) => {
     </div>
   )
 }
-
+const Part = (props) => {
+  return (
+    <p>
+      {props.part.name} {props.part.exercises}
+    </p>    
+  )
+}
 
 const App = () => {
   const courses = [
@@ -84,9 +87,7 @@ const App = () => {
   <div>
     <h1>Web development curriculum</h1>
   
-
-    <!-- This is a comment -->
-
+  {/*everything in jsx basically needs to be inside of curly braces, even comments....*/}
   {courses.map(course => (
     <Course key={course.id} course={course} />
   ))}

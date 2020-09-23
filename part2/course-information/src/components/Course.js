@@ -15,6 +15,7 @@ const Course = ({ course }) => (
   
 const Header = ({ course }) => <h2>{course}</h2>;
   
+
 const Content = ({ parts }) => (
     <>
       {parts.map(({ name, exercises, id }) => (
