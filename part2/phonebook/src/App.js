@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Persons from './components/Persons'
 import Personsform from './components/Personsform'
 import Filter from './components/Filter'
-import PhoneBook from './components/PhoneBook'
+import axios from 'axios'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ])
+  const [persons, setPersons] = useState([])
+  
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
-  const [filter, setFilter] = useState('')
+
+
+  const [filtered, setFiltered] = useState(persons) // filter becomes array of persons 
+
+  const [search, setSearch] = useState('')          //maybe another state for the fucking searchfield?
+
+
 
   //2.7, can't just blindly set person anymore, if statements?
   const handleSubmit = (event) => {
@@ -30,7 +32,7 @@ const App = () => {
 
     setNewName('')
     setNewPhone('')
-    setFilter('')
+    setFiltered('')
   }
 
 
@@ -43,26 +45,43 @@ const App = () => {
     setNewPhone(event.target.value)
   }
 
-  const handleNewFilterChange = (event) => {
+  const filterPers = (newList, searchQ) => setFiltered(newList.filter(
+    person => 
+    person.name.toLowerCase().includes(searchQ.toLowerCase())))
+
+
+  const handleSearch = (event) => {
     console.log(event.target.value)
-    setFilter(event.target.value)
+    
+    filterPers(persons, event.target.value)
+    setSearch(event.target.value)
   }
 
-  const results = !filter ? persons : persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
+  useEffect(() => {
+    axios
+    .get('http://localhost:3001/persons')
+    .then(response => {
+      setPersons(response.data)
+      filterPers(response.data, search) // filter persons according to data, and search query
 
-  // filter right below phonebook
+    return () => console.log("this will be logged on unmount")
+    })}, [])
+  
+
+  
+
   return (
     <div>
       <h2>Phonebook</h2>
 
-  <Filter>filter={filter} handleChange={handleNewFilterChange}</Filter>
+    <Filter>filter={setSearch} handleChange={handleSearch}</Filter>
 
       <h2>add a new</h2>
 
       <Personsform addPers={handleSubmit} newName={newName} handleNewName={handleInputChange}
                     newPhone={newPhone} handleNewPhone={handleNewPhone} />
       <h2>Numbers</h2>
-      <Persons persons={results}/>
+      <Persons persons={filtered}/>
     </div>
   )
 }
