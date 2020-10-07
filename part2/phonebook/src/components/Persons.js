@@ -1,15 +1,21 @@
 import React from 'react'
 
-const Persons = ({ persons }) => (
-	<div>
-    {
-      persons.map(person => (
-        <div key={person.id}>
-          {person.name} {person.number}
-        </div>)
-                 )
-    }
-  </div>
-    )
+const Person = ({ person, deletePerson }) => (
+    <div>
+        {person.name} {person.number}
+        <button onClick={deletePerson}>delete</button>
+    </div>
+)
 
-export default Persons 
+const Persons = ({ persons, deletePerson }) => (
+    <div>
+        {persons.map(person =>
+            <Person 
+             key={person.name} 
+             person={person}
+             deletePerson={() => deletePerson(person)} />
+        )}
+    </div>
+)
+
+export default Persons

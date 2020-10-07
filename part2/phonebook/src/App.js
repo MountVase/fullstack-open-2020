@@ -1,87 +1,123 @@
 import React, { useState, useEffect } from 'react'
 import Persons from './components/Persons'
-import Personsform from './components/Personsform'
 import Filter from './components/Filter'
-import axios from 'axios'
+import PersonForm from './components/PersonForm'
+import personService from './services/persons'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  
+
   const [newName, setNewName] = useState('')
-  const [newPhone, setNewPhone] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
 
-  const [filtered, setFiltered] = useState(persons) // filter becomes array of persons 
+  const [filter, setFilter] = useState('')
+  const [notification, setNotification] = useState({ message: null })
 
-  const [search, setSearch] = useState('')          //maybe another state for the fucking searchfield?
-
-
-
-  //2.7, can't just blindly set person anymore, if statements?
-  const handleSubmit = (event) => {
-    const person = { name: newName, number: newPhone}
-
-    console.log(newName)
-    console.log(newPhone)
-
-    event.preventDefault()
-    persons.some((persons) => persons.name === person.name)
-    ? alert(`${person.name} is already added to phonebook`)
-    : setPersons(persons.concat(person))
-
-
-    setNewName('')
-    setNewPhone('')
-    setFiltered('')
-  }
-
-
-  // if persons.map(person => person.name).includes(newName) {blablabla}
-  const handleInputChange = (event) => {
-    setNewName(event.target.value)
-  }
-
-  const handleNewPhone = (event) => {
-    setNewPhone(event.target.value)
-  }
-
-  const filterPers = (newList, searchQ) => setFiltered(newList.filter(
-    person => 
-    person.name.toLowerCase().includes(searchQ.toLowerCase())))
-
-
-  const handleSearch = (event) => {
-    console.log(event.target.value)
-    
-    filterPers(persons, event.target.value)
-    setSearch(event.target.value)
-  }
+  // now fetching data via personservice and setting persons state
 
   useEffect(() => {
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      setPersons(response.data)
-      filterPers(response.data, search) // filter persons according to data, and search query
+    personService.getAll().then(data => {setPersons(data)})
+      
+  }, [])
 
-    return () => console.log("this will be logged on unmount")
-    })}, [])
+
+  const showNotification = (message, type) => {
+    setNotification({ message, type })
+    
+    // after 5000, set message to null again
+    setTimeout(() => {
+      setNotification({ message: null })
+    }, 5000)
+  }
+
+  const removePerson = (id) => {
+    setPersons(persons.filter(person => person.id !== id))
+  }
   
 
-  
+  const addPerson = (event) => {
+    event.preventDefault()
+
+    const duplicate = persons.find((person) => person.name === newName)
+
+    if (duplicate) {
+      const choice = window.confirm(`${duplicate.name} is already added to phonebook, replace the old number with a new one?`)
+      
+      if (choice) {
+        const newPerson = { ...duplicate, number: newNumber }
+        personService
+          .update(newPerson)
+          .then(updatedPerson => {
+            setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person))
+            showNotification(`Updated ${updatedPerson.name}`, 'success')
+          })
+          .catch(err => {
+            removePerson(duplicate.id)
+            showNotification(`Information of ${duplicate.name} has already been removed from server`, 'error')
+          })
+      }
+
+    } else {
+      const pers = {
+        name: newName,
+        number: newNumber
+      }
+      personService
+        .create(pers)
+        .then(newPerson => {
+          setPersons(persons.concat(newPerson))
+          showNotification(`Added ${newPerson.name}`, 'success')
+          setNewName('')
+          setNewNumber('')
+        })
+    }
+  }
+
+  const handleNewNumber = event => setNewNumber(event.target.value)
+
+  const handleNewFilter = event => setFilter(event.target.value)
+
+  const handleNewName = event => setNewName(event.target.value)
+
+  const notificationType = (notification.type === 'success') ? 'success' : 'error'
+
+  const deletePerson = person => {
+    const { id, name } = person
+    if (window.confirm(`Delete ${name} ?`)) {
+      personService
+      .remove(id)
+      .then(() => removePerson(id))
+
+      .catch(err => {
+        removePerson(id)
+        showNotification(`Information of ${person.name} has already been removed from server`, 'error')
+      })
+    }
+  }
+
+
+
+  const personsResult = filter.length 
+                        ? persons.filter(person => person.name.toLowerCase().includes(filter.toLowerCase())) 
+                        : persons
+
 
   return (
     <div>
-      <h2>Phonebook</h2>
 
-    <Filter>filter={setSearch} handleChange={handleSearch}</Filter>
-
-      <h2>add a new</h2>
-
-      <Personsform addPers={handleSubmit} newName={newName} handleNewName={handleInputChange}
-                    newPhone={newPhone} handleNewPhone={handleNewPhone} />
-      <h2>Numbers</h2>
-      <Persons persons={filtered}/>
+        <h2>Phonebook</h2>
+        <Notification message={notification.message} styleClass={notificationType} />
+        <Filter filter={filter} handleFilter={handleNewFilter} />
+        <h2>add a new</h2>
+      
+        <PersonForm name={newName} number={newNumber} onNameChange={handleNewName} onNumberChange={handleNewNumber} onSubmit={addPerson}/>
+        <h2>Numbers</h2>
+      
+        <Persons persons={personsResult}deletePerson={deletePerson}/>
+    
+    
     </div>
   )
 }
