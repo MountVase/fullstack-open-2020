@@ -1,0 +1,21 @@
+{
+  "name": "phonebook_backend",
+  "version": "0.0.1",
+  "description": "Backend implementation of phonebook. Yay",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo 'aaa'"
+  },
+  "author": "Markus Vasemägi",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.5"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
+}
