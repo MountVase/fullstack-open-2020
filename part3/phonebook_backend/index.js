@@ -10,11 +10,12 @@ app.use(express.json())
 app.use(express.static('build'))
 //app.use(morgan('tiny'))
 
-const PORT = 3001
+const {PORT} = process.env.PORT || 3001
 
 
 morgan.token('info', (request, response) => JSON.stringify(request.body))
-app.use(morgan(':method :url :response-time ms :info'));
+
+app.use(morgan(':method :url :response-time ms :info'))
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
@@ -88,7 +89,6 @@ app.post('/api/persons', (request, response) => {
    persons = persons.concat(realPers)
 
    response.json(realPers)
-
 })
 
 
@@ -101,3 +101,9 @@ app.delete('/api/persons/:id', (request, response) => {
 
 
 
+//heroku crashes when GET '/'??
+app.get('/', (req, res) => {
+	res.write('<h1>welcome</h1>')
+	res.write('<p>you have been selected. figure out the next steps, if you are worthy')
+	res.end()
+})
