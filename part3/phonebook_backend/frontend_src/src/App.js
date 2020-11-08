@@ -65,6 +65,7 @@ const App = () => {
         personService.update(existing.id, {
           name: existing.name,
           number:newNumber
+
         }).then(retunedPerson => {
           setPersons(persons.map(person => person.id !== existing.id ? person : retunedPerson))
           notifyWith(`Changed number of  ${existing.name}`)
@@ -83,7 +84,7 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       }).catch(error => {
-        // pääset käsiksi palvelimen palauttamaan virheilmoitusolioon näin
+      	
         console.log(error.response.data.error)
         notifyWith(`${error.response.data.error} `, 'error')
       })

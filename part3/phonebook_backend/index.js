@@ -62,7 +62,7 @@ app.get('/info', (request, response, next) => {
 })
 
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const perz = request.body
     
     // if either is null
@@ -81,6 +81,7 @@ app.post('/api/persons', (request, response) => {
     pers.save().then(savedNote => {
     	response.json(savedNote)
     })
+    .catch(error => next(error))
 
 })
 
@@ -96,7 +97,7 @@ app.put('/api/persons/:id', (request, response, next) => {
     }
 
 
-    Person.findByIdAndUpdate(request.params.id, pers, { new: true }).then(updatedPerson => {
+    Person.findByIdAndUpdate(request.params.id, pers, { new: true , runValidators: true }).then(updatedPerson => {
     	response.json(updatedPerson)
 
     	})
