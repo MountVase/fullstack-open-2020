@@ -15,6 +15,24 @@ blogsRouter.post('/', async (request, response) => {
   
 })
 
+blogsRouter.get('/:id', async (request, response) => {
+  const blog = await Blog.findById(request.params.id)
+  response.json(blog)
+})
+
+blogsRouter.delete('/:id', async (request, response) => {
+  const blog = await Blog.findByIdAndDelete(request.params.id)
+  response.status(204).end() //response.json(blog)
+})
+
+blogsRouter.put('/:id', async (request, response) => {
+    // need everything to update, or just the value that differs?
+  const newLikes = {
+    likes: request.body.likes
+  }
+  await Blog.findByIdAndUpdate(request.params.id, newLikes, { new: true})
+  })
+
 /*
 
   blogsRouter.post('/', (request, response) => {

@@ -62,6 +62,12 @@ describe('API tests: ', () => {
     expect(allblogs).toHaveLength(helper.testBlogs.length+1)
     //TODO 
     // content check
+    //done
+
+    const alltitles = allblogs.map(blog => blog.title)
+    const blogtitle = alltitles[alltitles.length - 1]
+
+    expect(blogtitle).toBe('anotherone')
   })
 
   test('if likes property of blog is missing, default should be 0', async () => {
@@ -97,14 +103,31 @@ describe('API tests: ', () => {
       .send(blog)
       .expect(400)
     
-    // const allBlogs = await helper.blogsInDb()
-    // expect(allBlogs).toHaveLength(helper.testBlogs.length)
-    
+    // check if no blogs have been added.
+
+    const allBlogs = await helper.blogsInDb()
+    expect(allBlogs).toHaveLength(helper.testBlogs.length)
+  
   })
 
+})
 
+describe('specific :id operations', () => {
+  test('getting a specific :id', async () => {
+    const idOfSecondBlog = '5faaa9040a09973f6af10e43'
+
+    await api.get(`/api/blogs/${idOfSecondBlog}`)
+      .expect(200)
+    // console.log(response)
+    // expect(response.body.title).toBe(helper.testBlogs[1].title)
+
+  })
+
+  // TODO
+  // deleting test?? 
 
 })
+
 
 
 afterAll(() => {
