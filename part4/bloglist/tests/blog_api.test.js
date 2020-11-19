@@ -63,6 +63,28 @@ describe('API tests: ', () => {
     // content check
   })
 
+  test('if likes property of blog is missing, default should be 0', async () => {
+    const blog = {
+      title: 'Blog that no one likes',
+      author: 'Person that no one likes',
+      url: 'https://www.dea.gov/'
+    }
+
+    await api.post('/api/blogs')
+      .send(blog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
+    const allBlogs = await helper.blogsInDb()
+    const allLikes = allBlogs.map(blog => blog.likes)
+
+
+    const lastblog = allLikes[allLikes.length - 1]
+
+    expect(lastblog).toBe(0)
+
+  })
+
 
 
 })
