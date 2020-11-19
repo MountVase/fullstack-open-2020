@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 
+// 4.11 & 4.12, likes, title & author validation added.
+// middleware already routes mongoose validation errors to HTTP 400
+
 const blogSchema = new mongoose.Schema({
-    title: String,
+    title: { type: String, required: true},
     author: String,
-    url: String,
+    url: { type: String, required: true},
     likes: { type:Number, default:0 }
   })
   

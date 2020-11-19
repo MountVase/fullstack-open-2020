@@ -47,6 +47,7 @@ describe('API tests: ', () => {
     const blog = {
       title: 'anotherone',
       author: 'dickimus',
+      url: 'https://www.britannica.com/biography/Marcus-Aurelius-Roman-emperor'
     }
     
     await api.post('/api/blogs')
@@ -83,6 +84,22 @@ describe('API tests: ', () => {
 
     expect(lastblog).toBe(0)
 
+  })
+
+
+  test('if title & likes property is missing, backend responds with status code 400', async () => {
+    const blog = {
+      author: 'spammer',
+      likes: 10000
+    }
+
+    await api.post('/api/blogs')
+      .send(blog)
+      .expect(400)
+    
+    const allBlogs = await helper.blogsInDb()
+    expect(allBlogs).toHaveLength(helper.testBlogs.length)
+    
   })
 
 
