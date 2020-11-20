@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
+
+// passwordHash cannot have a minlength can it? not from mongoose-validators atleast
 const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true},
+    username: { type: String, required: true, unique: true, minlength: 3},
     name: String, 
-    passwordHash: String,
+    passwordHash: { type: String, required: true},
     blogs: [
         {
             type: mongoose.Schema.Types.ObjectId,

@@ -8,7 +8,7 @@ const app = require('../app')
 
 const api = supertest(app)
 
-describe('User tests. One user in db', () => {
+describe('User tests. 2 users in db', () => {
     
     beforeEach(async () => {
         await User.deleteMany({})
@@ -49,6 +49,12 @@ describe('User tests. One user in db', () => {
         const realUsers = await helper.usersInDb()
         const users = await api.get('/api/users')
         expect(users.length).toBe(realUsers.length)
+    })
+
+    test('helper test', async () => {
+        const users = await helper.usersInDb()
+        const usernames = users.map(u => u.username)
+        expect(usernames[0]).toBe('testingMAN')
     })
 })
 
