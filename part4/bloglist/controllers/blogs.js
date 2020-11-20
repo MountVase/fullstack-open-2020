@@ -9,7 +9,10 @@ blogsRouter.get('/', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
   const blog = new Blog(request.body)
-
+  usersRouter.get('/', async () => {{
+    const users = await User.find({})
+    response.json(users)
+}})
   const SAVEDBLOG = await blog.save()
   response.status(201).json(SAVEDBLOG)
   

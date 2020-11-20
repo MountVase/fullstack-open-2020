@@ -1,4 +1,13 @@
 
+POST http://localhost:3003/api/users
+Content-Type: application/json
+
+{
+    "username": "testingWOMAN",
+    "name": "fuckme",
+    "password": "sexrt"
+}
+
 
 PUT http://localhost:3003/api/blogs/5faaa9040a09973f6af10e43
 Content-Type: application/json
