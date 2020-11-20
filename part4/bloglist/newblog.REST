@@ -1,11 +1,9 @@
 
 
-PUT http://localhost:3003/api/blogs/5faaa9040a09973f6af10e43
-Content-Type: application/json
 
-{
-    "likes": 4
-}
+
+DELETE http://localhost:3003/api/blogs/5fb7de91ffa3f776e14e11ce
+
 
 POST http://localhost:3003/api/blogs
 content-type: application/json
@@ -18,7 +16,9 @@ content-type: application/json
 }
 
 
+PUT http://localhost:3003/api/blogs/5faaa9040a09973f6af10e43
+Content-Type: application/json
 
-DELETE http://localhost:3003/api/blogs/5fb6bef8e38e1a213b592ff1
-
-
+{
+    "likes": 4
+}

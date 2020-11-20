@@ -5,20 +5,8 @@
 Content-Type: application/json
 
 {
-    "username": "testingWOMAN",
-    "name": "fuckme",
-     "password": "sexrt"
+    "username": "sec0jd?ers",
+    "name": "yeaboiiiiii",
+     "password": "sewdawdawdxrt"
 }
-
-
-
- POST http://localhost:3003/api/users
-Content-Type: application/json
-
-{
-    "username": "to",
-    "name": "fuckme",
-     "password": "sexwwxa"
-}
-
 
