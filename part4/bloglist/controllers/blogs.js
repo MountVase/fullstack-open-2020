@@ -1,6 +1,7 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const jwt = require('jsonwebtoken')
 
 
 blogsRouter.get('/', async (request, response) => {
@@ -8,9 +9,31 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  // if authorization field exists in HTTP request and starts with 'bearer '
+  // then return everything but the first 7 characters
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
+
 blogsRouter.post('/', async (request, response) => {
-  const user = await User.findOne()
+  
   const body = request.body
+  // by putting request in the parameters of getTokenFrom, we essentially pass on the responsibility, cool
+  const token = getTokenFrom(request)
+  
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({ error: 'token missing or invalid (loginstuff)' })
+  }
+
+  const user = await User.findById(decodedToken.id)
+
+
   const blog = new Blog({
     likes: body.likes,
     title: body.title,
@@ -19,7 +42,7 @@ blogsRouter.post('/', async (request, response) => {
     id: body.id,
     user: user._id
   })
-
+  
   
 /*
   usersRouter.get('/', async () => {
