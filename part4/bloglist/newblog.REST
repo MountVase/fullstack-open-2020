@@ -4,9 +4,10 @@
 
 
 
-POST http://localhost:3003/api/blogs
+DELETE http://localhost:3003/api/blogs/5fb7ed2b4bec6e8b9a4310d1
 content-type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pbGRPcmFuZ2UiLCJpZCI6IjVmYjkzM2U1ZGQ1NWMyYmYxY2U4MWNjYSIsImlhdCI6MTYwNTk3NDUzNX0.Bgg1NFw_-FveOMKz-gg_sSekkFyzvIyBIXxKdsxw4ic
+
 
 {
     "title": "I need to go to New Zealand",
@@ -14,4 +15,3 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pb
     "url": "https://www.youtube.com/watch?v=1hrUaOrIQR4",
     "likes": 69
 }
-
