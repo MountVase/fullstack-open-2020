@@ -1,21 +1,12 @@
 
- POST http://localhost:3003/api/login
-Content-Type: application/json
-
-{
-    "username": "sec0jd?ers",
-     "password": "sewdawdawdxrt"
-}
-
 
 POST http://localhost:3003/api/login
 Content-Type: application/json
-Authorization: bearer xxxx
+ POST http://localhost:3003/api/users
+Content-Type: application/json
 
 {
-    "title": "I logged in and then posted this blog",
-    "author": "MeMyselfAndI",
-    "url": "blogs.com/asshole",
-    "likes": 2
+    "username": "mildOrange",
+    "name": "ForePlay",
+    "password": "loveUncovered"
 }
-

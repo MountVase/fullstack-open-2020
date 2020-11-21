@@ -16,8 +16,6 @@ usersRouter.post('/', async (request, response) => {
     if (!body.password) return response.status(400).json({ error: 'password is required.'})
     if (body.password.length < 4) return response.status(400).json({ error: 'password too short, just like your   '})
 
-
-
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(body.password, saltRounds)
 

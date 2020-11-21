@@ -12,7 +12,6 @@ const blogSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }
-    
   })
   
   // makes ids more readable and removes clutter

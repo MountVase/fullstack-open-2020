@@ -2,23 +2,16 @@
 
 
 
-DELETE http://localhost:3003/api/blogs/5fb7de91ffa3f776e14e11ce
 
 
 POST http://localhost:3003/api/blogs
 content-type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pbGRPcmFuZ2UiLCJpZCI6IjVmYjkzM2U1ZGQ1NWMyYmYxY2U4MWNjYSIsImlhdCI6MTYwNTk3NDUzNX0.Bgg1NFw_-FveOMKz-gg_sSekkFyzvIyBIXxKdsxw4ic
 
 {
-    "title": "deleteME",
-    "author": "MeMyselfAndI",
-    "url": "blogs.com/asshole",
-    "likes": 2
+    "title": "I need to go to New Zealand",
+    "author": "Markus",
+    "url": "https://www.youtube.com/watch?v=1hrUaOrIQR4",
+    "likes": 69
 }
 
-
-PUT http://localhost:3003/api/blogs/5faaa9040a09973f6af10e43
-Content-Type: application/json
-
-{
-    "likes": 4
-}

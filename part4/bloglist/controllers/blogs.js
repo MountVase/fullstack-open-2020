@@ -9,25 +9,13 @@ blogsRouter.get('/', async (request, response) => {
   response.json(blogs)
 })
 
-const getTokenFrom = request => {
-  const authorization = request.get('authorization')
-  // if authorization field exists in HTTP request and starts with 'bearer '
-  // then return everything but the first 7 characters
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7)
-  }
-  return null
-}
 
 blogsRouter.post('/', async (request, response) => {
-  
   const body = request.body
-  // by putting request in the parameters of getTokenFrom, we essentially pass on the responsibility, cool
-  const token = getTokenFrom(request)
-  
-  const decodedToken = jwt.verify(token, process.env.SECRET)
+  console.log(request.token)
+  const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
-  if (!token || !decodedToken.id) {
+  if (!request.token || !decodedToken.id || !decodedToken) {
     return response.status(401).json({ error: 'token missing or invalid (loginstuff)' })
   }
 
