@@ -17,7 +17,7 @@ const blogs = [ { _id: "5a422a851b54a676234d17f7", title: "React patterns", auth
 
 const testBlogs = [ { _id: "5a422a851b54a676234d17f7", title: "React patterns", author: "Michael Chan", url: "https://reactpatterns.com/", likes: 7, __v: 0 }, { _id: "5a422aa71b54a676234d17f8", title: "Go To Statement Considered Harmful", author: "Edsger W. Dijkstra", url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html", likes: 5, __v: 0 } ]
 
-const testUsers = [ {"blogs":[],"username":"testingMAN","name":"birdsong","id":"5fb7cd2fdcda8b672503128a"}, {"blogs":[],"username":"testingWOMAN","name":"fuckme","id":"5fb7d265e4d63c6b84f53c21"} ]
+const testUsers = [ {"blogs":[],"username":"testingMAN","name":"birdsong","id":"5fb7cd2fdcdaa8b673503128a"}, {"blogs":[],"username":"testingWOMAN","name":"fuckme","id":"5fb7dadw5e4d63c6b76f53c21"} ]
 
 const blogsInDb = async () => {
     const blogs = await Blog.find({})

@@ -5,8 +5,8 @@
 Content-Type: application/json
 
 {
-    "username": "mildOrange",
-    "name": "ForePlay",
-    "password": "loveUncovered"
+    "username": "default",
+    "name": "default",
+    "password": "default"
 }
 

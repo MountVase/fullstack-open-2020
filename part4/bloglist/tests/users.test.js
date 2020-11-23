@@ -8,15 +8,14 @@ const app = require('../app')
 
 const api = supertest(app)
 
-describe('User tests. 2 users in db', () => {
+describe('User tests. 1 user in db', () => {
     
     beforeEach(async () => {
         await User.deleteMany({})
+        
+        const passwordHash = await bcrypt.hash('default', 10)
+        const user = new User({ username: 'default', passwordHash })
 
-        const passwordHash = await bcrypt.hash('supersecret', 10)
-        let user = new User(helper.testUsers[0])
-        await user.save()
-        user = new User(helper.testUsers[1])
         await user.save()
     })
 
@@ -45,16 +44,16 @@ describe('User tests. 2 users in db', () => {
         expect(1).toBe(1)
     })
 
-    test('getting users works', async () => {
+    test('getting the user works', async () => {
         const realUsers = await helper.usersInDb()
-        const users = await api.get('/api/users')
-        expect(users.length).toBe(realUsers.length)
+        const usernames = realUsers.map(u => u.username)
+        expect(usernames).toContain('default')
     })
 
     test('helper test', async () => {
         const users = await helper.usersInDb()
         const usernames = users.map(u => u.username)
-        expect(usernames[0]).toBe('testingMAN')
+        expect(usernames[0]).toBe('default')
     })
 })
 
