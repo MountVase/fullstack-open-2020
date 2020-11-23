@@ -16,7 +16,6 @@ const tokenExtractor = (request, response, next) => {
     request.token = auth.substring(7)
   }
 
-  console.log(request.token)
   next()
 }
 
