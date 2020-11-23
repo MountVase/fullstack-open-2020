@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const supertest = require('supertest')
+const bcrypt = require('bcrypt')
 const app = require('../app')
 const helper = require('../utils/test_helper')
 
@@ -7,7 +8,7 @@ const api = supertest(app)
 
 // test fodder
 const Blog = require('../models/blog')
-
+const User = require('../models/user')
 
 
 
@@ -20,7 +21,7 @@ beforeEach(async () => {
   await Promise.all(promiseArray)
 })
 
-describe('API tests: ', () => {
+describe('Non-token tests: ', () => {
 
   test('blogs are returned as json', async () => {
     await api.get('/api/blogs')
@@ -43,7 +44,34 @@ describe('API tests: ', () => {
     expect(blog.id).toBeDefined()
   })
 
-  test('posting w/ http a blog is possible', async () => {
+})
+  // härifrån neråt broken 
+
+describe('authentication-involved tests: ', () => {
+  let token = null
+
+  // logging in before doing any of the tests, 
+  // describe blocks useful bcz of this
+  beforeAll(async () => {
+
+    // clearing database, creating a testing user, and then logging in
+    await User.deleteMany({})
+
+    const passwordHash = await bcrypt.hash('tester', 10)
+    const user = new User({ username: 'tester', passwordHash })
+
+    await user.save()
+
+
+    const response = await api
+      .post('/api/login')
+      .send({ username: 'tester', password: 'tester'})
+      
+
+    token = response.body.token
+  })
+
+  test('posting w/ http a blog is [im]possible when not logged in', async () => {
     const blog = {
       title: 'anotherone',
       author: 'dickimus',
@@ -52,25 +80,38 @@ describe('API tests: ', () => {
     
     await api.post('/api/blogs')
       .send(blog)
-      .expect(201)
+      .expect(401)
       .expect('Content-Type', /application\/json/)
 
-
+    
+      
+    const ass = token
     // obs! blogsInDb() is a function.. not an array or something else from test helper
     const allblogs = await helper.blogsInDb()
 
-    expect(allblogs).toHaveLength(helper.testBlogs.length+1)
-    //TODO 
-    // content check
-    //done
+    expect(allblogs).toHaveLength(helper.testBlogs.length)
+    
 
-    const alltitles = allblogs.map(blog => blog.title)
-    const blogtitle = alltitles[alltitles.length - 1]
+  })
 
-    expect(blogtitle).toBe('anotherone')
+  test('posting is possible when logged in with valid token' , async () => {
+    const blog = {
+      title: 'Attachment is the enemy of love.',
+      author: 'loveDoctor',
+      url: 'https://grahamhancock.com/galleries/'
+    }
+
+    await api
+      .post('/api/blogs')
+      .set('Authorization', `bearer ${token}`)
+      .send(blog)
+      .expect(201)
+      .expect('Content-Type', /application\/json/)
+
   })
 
   test('if likes property of blog is missing, default should be 0', async () => {
+
     const blog = {
       title: 'Blog that no one likes',
       author: 'Person that no one likes',
