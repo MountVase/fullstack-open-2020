@@ -71,6 +71,7 @@ describe('authentication-involved tests: ', () => {
     token = response.body.token
   })
 
+
   test('posting w/ http a blog is [im]possible when not logged in', async () => {
     const blog = {
       title: 'anotherone',
@@ -83,9 +84,7 @@ describe('authentication-involved tests: ', () => {
       .expect(401)
       .expect('Content-Type', /application\/json/)
 
-    
       
-    const ass = token
     // obs! blogsInDb() is a function.. not an array or something else from test helper
     const allblogs = await helper.blogsInDb()
 
@@ -119,6 +118,7 @@ describe('authentication-involved tests: ', () => {
     }
 
     await api.post('/api/blogs')
+      .set('Authorization', `bearer ${token}`)
       .send(blog)
       .expect(201)
       .expect('Content-Type', /application\/json/)
@@ -141,6 +141,7 @@ describe('authentication-involved tests: ', () => {
     }
 
     await api.post('/api/blogs')
+      .set('Authorization', `bearer ${token}`)
       .send(blog)
       .expect(400)
     
