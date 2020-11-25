@@ -43,7 +43,13 @@ const App = () => {
         username, password,
       })
 
-      window.localStorage.set(user.token)
+      window.localStorage.setItem(
+        'loggedInUser', JSON.stringify(user)
+      )
+      blogService.setToken(user.token)
+      console.log('handleLogin setting of token: ', user.token)
+
+
       setUser(user)
       setUsername('')
       setPassword('')
@@ -60,15 +66,23 @@ const App = () => {
   }
 
   const handleCreation = async (event) => {
-    const blog = new Blog({
+    event.preventDefault()
+
+    const blog = {
       title: title,
       author: author,
       url: url,
-      user: user,
-    })
+      user: user
+    }
 
-    await blogService.create(blog)
+    try {
 
+      const response = await blogService.create(blog)
+      console.log('HandleCreation response: ', response)
+    } catch (exception) {
+      console.log(exception)
+    }
+    
 
     setTitle('')
     setAuthor('')
