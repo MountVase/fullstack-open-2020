@@ -21,6 +21,8 @@ const App = () => {
 
   const [notif, setNotif] = useState(null)
 
+  // played around with order of a, b. now seems to work.
+  const sortedByLikes = [...blogs.sort((a, b) => b.likes - a.likes)]
 
 
   useEffect(() => {
@@ -114,7 +116,7 @@ const App = () => {
       </BlogForm>
       </Toggle>
 
-      {blogs.map(blog =>
+      {sortedByLikes.map(blog =>
         <Blog key={blog.id} blog={blog} />
         
       )}
