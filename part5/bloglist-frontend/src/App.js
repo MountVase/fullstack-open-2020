@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
+
 import Blog from './components/Blog'
 import Notifcation from './components/Notification'
+import Toggle from './components/Toggle'
 
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
@@ -98,7 +100,7 @@ const App = () => {
       setTimeout(() => {
         setNotif(null)
       }, 5000)
-      
+
     } catch (exception) {
       console.log(exception)
     }
@@ -138,16 +140,17 @@ const App = () => {
       </div>
 
       <h2>create new</h2>
-
-      <BlogForm
-      onSubmit={handleCreation}
-      title={title}
-      setTitle={setTitle}
-      author={author}
-      setAuthor={setAuthor}
-      url={url}
-      setUrl={setUrl}
-      ></BlogForm>
+      <Toggle buttonLabel="create new blog">
+        <BlogForm
+        onSubmit={handleCreation}
+        title={title}
+        setTitle={setTitle}
+        author={author}
+        setAuthor={setAuthor}
+        url={url}
+        setUrl={setUrl}
+        ></BlogForm>
+      </Toggle>
 
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />

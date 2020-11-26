@@ -8,8 +8,6 @@ const Notification = ({ props }) => {
     else return (
     <div className={props.type}>{props.message}</div>
     )
-
-
 }
 
 export default Notification
