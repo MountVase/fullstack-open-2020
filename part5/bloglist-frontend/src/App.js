@@ -114,9 +114,13 @@ const App = () => {
       </Toggle>
 
       {blogs.map(blog =>
+      
+        <Toggle buttonLabel='view'>
         <Blog key={blog.id} blog={blog} />
+        </Toggle>
       )}
-    </div>
+
+      </div>
   )
 }
 
