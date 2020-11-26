@@ -12,6 +12,7 @@ import loginService from './services/loginService'
 
 import './index.css'
 
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
@@ -115,9 +116,9 @@ const App = () => {
 
       {blogs.map(blog =>
       
-        <Toggle buttonLabel='view'>
+        
         <Blog key={blog.id} blog={blog} />
-        </Toggle>
+        
       )}
 
       </div>
