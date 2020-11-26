@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Blog from './components/Blog'
+import Notifcation from './components/Notification'
 
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
@@ -7,7 +8,7 @@ import BlogForm from './components/BlogForm'
 import blogService from './services/blogService'
 import loginService from './services/loginService'
 
-
+import './index.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -18,6 +19,8 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+
+  const [notif, setNotif] = useState(null)
 
 
   useEffect(() => {
@@ -48,13 +51,25 @@ const App = () => {
       )
       blogService.setToken(user.token)
       console.log('handleLogin setting of token: ', user.token)
-
-
+      
       setUser(user)
       setUsername('')
       setPassword('')
+
+      setNotif({message: `welcome back, ${user.name}.`, type: 'loginSuccess'})
+      // after set seconds, setNotif to null again
+      setTimeout(() => {
+        setNotif(null)
+      }, 5000)
+
+
     } catch (exception) {
       console.log(exception)
+      setNotif({message: `wrong username or passss`, type: 'loginFailed'})
+
+      setTimeout(() => {
+        setNotif(null)
+      }, 5000)
     }
   }
 
@@ -79,6 +94,11 @@ const App = () => {
 
       const response = await blogService.create(blog)
       console.log('HandleCreation response: ', response)
+      setNotif({message: `a new blog ${blog.title} by ${blog.author} added`, type: 'loginSuccess'})
+      setTimeout(() => {
+        setNotif(null)
+      }, 5000)
+      
     } catch (exception) {
       console.log(exception)
     }
@@ -94,14 +114,16 @@ const App = () => {
     const temp = <div><p>ass</p></div>
     const t = <div><p>titties</p></div>
 
-    const loginform = <LoginForm
+    const loginform = <div>
+                      <Notifcation props={notif}></Notifcation>
+                      <LoginForm
                       onSubmit={handleLogin}
                       username={username}
                       setUsername={setUsername}
                       password={password}
                       setPassword={setPassword}
-                    ></LoginForm>
-
+                      ></LoginForm>
+                      </div>
     return (
       loginform
     )
@@ -109,6 +131,7 @@ const App = () => {
   
   return (
     <div>
+      <Notifcation props={notif}></Notifcation>
       <h2>blogs</h2>
       <div>{user.name} logged in
       <button onClick={handleLogout}> logout</button>
