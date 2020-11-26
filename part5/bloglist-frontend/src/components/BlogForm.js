@@ -1,10 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
+import blogService from '../services/blogService'
+import Notification from './Notification'
 
-const BlogForm = ({ onSubmit, title, setTitle, author, setAuthor, url, setUrl }) => {
+const BlogForm = () => {
     
+    const [notif, setNotif] = useState(null)
+
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [url, setUrl] = useState('')
+
+    const handleCreation = async (event) => {
+        event.preventDefault()
     
+        const blog = {
+          title: title,
+          author: author,
+          url: url,
+        
+        }
+    
+        try {
+    
+          const response = await blogService.create(blog)
+          console.log('HandleCreation response: ', response)
+          setNotif({message: `a new blog ${blog.title} by ${blog.author} added`, type: 'loginSuccess'})
+          setTimeout(() => {
+            setNotif(null)
+          }, 5000)
+    
+        } catch (exception) {
+          console.log(exception)
+        }
+        
+    
+        setTitle('')
+        setAuthor('')
+        setUrl('')
+      }
+
+
     return (
-        <form onSubmit={onSubmit}>
+        <div>
+        <Notification props={notif}></Notification>
+        <form onSubmit={handleCreation}>
         <div>
         title
             <input
@@ -36,6 +75,7 @@ const BlogForm = ({ onSubmit, title, setTitle, author, setAuthor, url, setUrl })
         <button type="submit">create</button>
         </div>
     </form>
+    </div>
     )    
 }
 
