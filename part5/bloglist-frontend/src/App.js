@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import Blog from './components/Blog'
-import Notifcation from './components/Notification'
+import Notification from './components/Notification'
 import Toggle from './components/Toggle'
 
 import LoginForm from './components/LoginForm'
@@ -86,7 +86,7 @@ const App = () => {
     const t = <div><p>titties</p></div>
 
     const loginform = <div>
-                      <Notifcation props={notif}></Notifcation>
+                      <Notification props={notif}></Notification>
                       <LoginForm
                       onSubmit={handleLogin}
                       username={username}
@@ -102,7 +102,7 @@ const App = () => {
   
   return (
     <div>
-      <Notifcation props={notif}></Notifcation>
+      <Notification props={notif}></Notification>
       <h2>blogs</h2>
       <div>{user.name} logged in
       <button onClick={handleLogout}> logout</button>
@@ -115,8 +115,6 @@ const App = () => {
       </Toggle>
 
       {blogs.map(blog =>
-      
-        
         <Blog key={blog.id} blog={blog} />
         
       )}

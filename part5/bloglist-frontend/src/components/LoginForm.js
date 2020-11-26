@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+
 
 const LoginForm = ({ onSubmit, username, setUsername, password, setPassword }) => {
     
+
     return (
-    
+    <div>
     <form onSubmit={onSubmit}>
         <div>
         username
@@ -25,7 +27,7 @@ const LoginForm = ({ onSubmit, username, setUsername, password, setPassword }) =
         </div>
         <button type="submit">login</button>
     </form>
-    
+    </div>
     )
 }
 
