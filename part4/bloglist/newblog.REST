@@ -2,16 +2,14 @@
 
 
 
-
-
-DELETE http://localhost:3003/api/blogs/5fb7ed2b4bec6e8b9a4310d1
+PUT http://localhost:3001/api/blogs/5fbfc7273608cd8d44f691db
 content-type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pbGRPcmFuZ2UiLCJpZCI6IjVmYjkzM2U1ZGQ1NWMyYmYxY2U4MWNjYSIsImlhdCI6MTYwNTk3NDUzNX0.Bgg1NFw_-FveOMKz-gg_sSekkFyzvIyBIXxKdsxw4ic
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pbGRPcmFuZ2UiLCJpZCI6IjVmYjkzM2U1ZGQ1NWMyYmYxY2U4MWNjYSIsImlhdCI6MTYwNjQxOTE1MX0.ohAOZeMuNG__XfW43yaGdZgKjHtLsK1HlHhP9r-pkes 
 
-
-{
-    "title": "I need to go to New Zealand",
-    "author": "Markus",
-    "url": "https://www.youtube.com/watch?v=1hrUaOrIQR4",
-    "likes": 69
-}
+  {
+    "user": "5fb933e5dd55c2bf1ce81cca",
+    "likes": 2,
+    "author": "123",
+    "title": "notiftest",
+    "url": "adw"
+  }

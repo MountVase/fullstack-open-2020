@@ -31,7 +31,7 @@ blogsRouter.post('/', async (request, response) => {
   })
   
   
-/*
+  /*
   usersRouter.get('/', async () => {
     const users = await User.find({})
     response.json(users)
@@ -75,12 +75,26 @@ blogsRouter.delete('/:id', async (request, response) => {
 })
 
 blogsRouter.put('/:id', async (request, response) => {
-    // need everything to update, or just the value that differs?
-  const newLikes = {
-    likes: request.body.likes
+  // need everything to update, or just the value that differs?
+  const body = request.body
+
+  const newBlog = {
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes
   }
-  await Blog.findByIdAndUpdate(request.params.id, newLikes, { new: true})
-  })
+
+  const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newBlog, { new: true } )
+
+  if (updatedBlog) {
+    return response.status(200).json(updatedBlog)
+
+  } else {
+    return response.status(400).end()
+  }
+
+})
 
 /*
 
@@ -95,4 +109,4 @@ blogsRouter.put('/:id', async (request, response) => {
   })
 */
 
-  module.exports = blogsRouter
+module.exports = blogsRouter

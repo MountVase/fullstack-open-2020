@@ -25,8 +25,8 @@ describe('Non-token tests: ', () => {
 
   test('blogs are returned as json', async () => {
     await api.get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
 
   })
 
@@ -45,7 +45,7 @@ describe('Non-token tests: ', () => {
   })
 
 })
-  // härifrån neråt broken 
+// härifrån neråt broken 
 
 describe('authentication-involved tests: ', () => {
   let token = null
@@ -133,7 +133,6 @@ describe('authentication-involved tests: ', () => {
 
   })
 
-
   test('if title & likes property is missing, backend responds with status code 400', async () => {
     const blog = {
       author: 'spammer',
@@ -169,7 +168,6 @@ describe('specific :id operations', () => {
   // deleting test?? 
 
 })
-
 
 
 afterAll(() => {
