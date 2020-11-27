@@ -76,6 +76,7 @@ const App = () => {
   }
 
   const handleLogout = async (event) => {
+    event.preventDefault()
     window.localStorage.removeItem('loggedInUser')
     setUser(null)
     setUsername('')
@@ -84,8 +85,6 @@ const App = () => {
 
   // handleLogin, username, setUsername, password, setPassword
   if (user === null) {
-    const temp = <div><p>ass</p></div>
-    const t = <div><p>titties</p></div>
 
     const loginform = <div>
                       <Notification props={notif}></Notification>
@@ -117,7 +116,7 @@ const App = () => {
       </Toggle>
 
       {sortedByLikes.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} user={user}/>
         
       )}
 

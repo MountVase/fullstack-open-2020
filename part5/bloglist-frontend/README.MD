@@ -12,4 +12,7 @@ Will start using temporary README's to document progress and plan stuff.
 
 -5.10 => deletion button + prompt to confirm is going to be a bit more challenging. 
 	button should be easily implementable in Blog component, prompt maybe in the same component as function?
+	
+	Button functionality and styling was easy, but only showing it in the appropriate blogs might get harder.
+	Also still doing the prompt. Couldn't pass users id to Blog component for some reason, but username is also unique so I compared that instead.
 		
