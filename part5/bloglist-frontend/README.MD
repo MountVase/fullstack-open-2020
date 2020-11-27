@@ -10,3 +10,6 @@ Will start using temporary README's to document progress and plan stuff.
 	I'll also refactor LoginForm (states and eventHandlers), nope, this seems redundant, will break something
 	like button works, but one needs to refresh the page for it to work... hmmm
 
+-5.10 => deletion button + prompt to confirm is going to be a bit more challenging. 
+	button should be easily implementable in Blog component, prompt maybe in the same component as function?
+		

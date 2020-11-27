@@ -56,7 +56,7 @@ const Blog = ({ blog }) => {
       </div>
       <div>{blog.url}</div>
     <div>
-      {blog.likes}
+      {likes}
       <button type="button" onClick={addLike}>like</button>
     </div>
     <div>{blog.user.name}</div>
