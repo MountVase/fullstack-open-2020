@@ -3,7 +3,7 @@ import blogService from '../services/blogService'
 
 const Blog = ({ blog, user }) => {
 
-  const [showAll, setShowAll] = useState(false)  
+  const [showAll, setShowAll] = useState(false)
   const [likes, setLikes] = useState(blog.likes)
 
 
@@ -45,7 +45,7 @@ const Blog = ({ blog, user }) => {
     const bool = window.confirm(`Remove blog "${blog.title} by ${blog.author}?"`)
 
     if (bool) {
-      
+
       try {
         await blogService.remove(blog.id)
         console.log('deleting successful')
@@ -85,15 +85,15 @@ const Blog = ({ blog, user }) => {
         <button type="button" onClick={toggleVisibility}>hide</button>
       </div>
       <div>{blog.url}</div>
-    <div>
-      {likes}
-      <button type="button" onClick={addLike}>like</button>
-    </div>
+      <div>
+        {likes}
+        <button type="button" onClick={addLike}>like</button>
+      </div>
 
-    <div>{blog.user.name}</div>
-    
-  <div>{buttonVisibility()}</div>
-  </div>
+      <div>{blog.user.name}</div>
+
+      <div>{buttonVisibility()}</div>
+    </div>
   )
 }
 

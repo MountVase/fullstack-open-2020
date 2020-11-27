@@ -1,34 +1,34 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 
 const LoginForm = ({ onSubmit, username, setUsername, password, setPassword }) => {
-    
 
-    return (
+
+  return (
     <div>
-    <form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
         <div>
         username
-            <input
+          <input
             type="text"
             value={username}
             name="Username"
             onChange={({ target }) => setUsername(target.value)}
-            />
+          />
         </div>
         <div>
         password
-            <input
+          <input
             type="password"
             value={password}
             name="Password"
             onChange={({ target }) => setPassword(target.value)}
-            />
+          />
         </div>
         <button type="submit">login</button>
-    </form>
+      </form>
     </div>
-    )
+  )
 }
 
 export default LoginForm

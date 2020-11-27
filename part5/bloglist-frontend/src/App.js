@@ -28,7 +28,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const App = () => {
       const user = JSON.parse(loggedInUser)
       setUser(user)
       blogService.setToken(user.token)
-    } 
+    }
   }, [])
 
   const handleLogin = async (event) => {
@@ -53,12 +53,12 @@ const App = () => {
       )
       blogService.setToken(user.token)
       console.log('handleLogin setting of token: ', user.token)
-      
+
       setUser(user)
       setUsername('')
       setPassword('')
 
-      setNotif({message: `welcome back, ${user.name}.`, type: 'loginSuccess'})
+      setNotif({ message: `welcome back, ${user.name}.`, type: 'loginSuccess' })
       // after set seconds, setNotif to null again
       setTimeout(() => {
         setNotif(null)
@@ -67,7 +67,7 @@ const App = () => {
 
     } catch (exception) {
       console.log(exception)
-      setNotif({message: `wrong username or passss`, type: 'loginFailed'})
+      setNotif({ message: 'wrong username or passss', type: 'loginFailed' })
 
       setTimeout(() => {
         setNotif(null)
@@ -87,40 +87,40 @@ const App = () => {
   if (user === null) {
 
     const loginform = <div>
-                      <Notification props={notif}></Notification>
-                      <LoginForm
-                      onSubmit={handleLogin}
-                      username={username}
-                      setUsername={setUsername}
-                      password={password}
-                      setPassword={setPassword}
-                      ></LoginForm>
-                      </div>
+      <Notification props={notif}></Notification>
+      <LoginForm
+        onSubmit={handleLogin}
+        username={username}
+        setUsername={setUsername}
+        password={password}
+        setPassword={setPassword}
+      ></LoginForm>
+    </div>
     return (
       loginform
     )
   }
-  
+
   return (
     <div>
       <Notification props={notif}></Notification>
       <h2>blogs</h2>
       <div>{user.name} logged in
-      <button onClick={handleLogout}> logout</button>
+        <button onClick={handleLogout}> logout</button>
       </div>
 
       <h2>create new</h2>
       <Toggle buttonLabel="create new blog">
-      <BlogForm>
-      </BlogForm>
+        <BlogForm>
+        </BlogForm>
       </Toggle>
 
       {sortedByLikes.map(blog =>
         <Blog key={blog.id} blog={blog} user={user}/>
-        
+
       )}
 
-      </div>
+    </div>
   )
 }
 
