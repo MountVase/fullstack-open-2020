@@ -1,4 +1,5 @@
 const dummy = (blogs) => {
+  console.log('dummy', blogs)
   return 1
 }
 

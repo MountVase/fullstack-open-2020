@@ -53,7 +53,6 @@ blogsRouter.get('/:id', async (request, response) => {
 })
 
 blogsRouter.delete('/:id', async (request, response) => {
-  const body = request.body
 
   const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
