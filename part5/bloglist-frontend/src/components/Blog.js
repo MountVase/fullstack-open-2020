@@ -71,7 +71,7 @@ const Blog = ({ blog, user }) => {
 
   if (!showAll) {
     return (
-      <div style={blogStyle}>
+      <div style={blogStyle} className="previewBlog">
         {blog.title} by {blog.author}
         <button type="button" onClick={toggleVisibility}>view</button>
       </div>
@@ -79,7 +79,7 @@ const Blog = ({ blog, user }) => {
   }
 
   return (
-    <div style={blogStyle} onClick={toggleVisibility}>
+    <div style={blogStyle} className="completeBlog">
       <div>
         {blog.title} by {blog.author}
         <button type="button" onClick={toggleVisibility}>hide</button>
