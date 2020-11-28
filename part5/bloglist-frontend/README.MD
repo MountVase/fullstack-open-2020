@@ -20,3 +20,8 @@ Will start using temporary README's to document progress and plan stuff.
 	my <Blog> component is now turning out to be a pain in the ass,
 	because it needs a user logged in to even render the url and likes...
 	
+-5.15 =>Biggeeeer problem. How I render likes, makes it difficult to like twice
+	and even more difficult to test liking twice..
+	Some simple errors (id: '..' missing in newBlog sent to server..) fixed
+	and now liking several times works. Removed [likes] state from <Blog> 
+	and replaced it with the actual blog in question... nice. 

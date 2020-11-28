@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogService'
 
-const Blog = ({ blog, user }) => {
+const Blog = ({ initialBlog, user }) => {
 
   const [showAll, setShowAll] = useState(false)
-  const [likes, setLikes] = useState(blog.likes)
-
+  const [blog, setBlog] = useState(initialBlog)
 
   const toggleVisibility = () => {
     setShowAll(!showAll)
@@ -17,8 +16,12 @@ const Blog = ({ blog, user }) => {
 
     const newLikes = blog.likes + 1
 
+    // new blogs user (id only) is fetched from the current blog.
+
+    // FUCKME ID WAS MISSING THATS WHY IT LIKED ONLY ONE TIME:.........
     const newBlog = {
-      user: blog.user._id,
+      id: blog.id,
+      user: blog.user,
       likes: newLikes,
       author: blog.author,
       title: blog.title,
@@ -26,8 +29,8 @@ const Blog = ({ blog, user }) => {
     }
 
     const response = await blogService.update(blog.id, newBlog)
-    setLikes(response.likes)
-
+    console.log('logging some SHIIET:', response)
+    setBlog(newBlog)
   }
 
 
@@ -57,7 +60,9 @@ const Blog = ({ blog, user }) => {
   }
 
   const buttonVisibility = () => {
-    if (blog.user.name.toString() === user.name.toString()) {
+    console.log('blog USER: ', JSON.stringify(blog.user))
+    console.log('user USER: ', JSON.stringify(user))
+    if (blog.user.username.toString() === user.username.toString()) {
       return (
         <div className="button">
           <button type="button" onClick={deleteBlog}>remove</button>
@@ -85,8 +90,8 @@ const Blog = ({ blog, user }) => {
         <button type="button" onClick={toggleVisibility}>hide</button>
       </div>
       <div>{blog.url}</div>
-      <div>
-        {likes}
+      <div className="likes">
+        {blog.likes}
         <button type="button" onClick={addLike}>like</button>
       </div>
 

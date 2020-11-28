@@ -116,7 +116,7 @@ const App = () => {
       </Toggle>
 
       {sortedByLikes.map(blog =>
-        <Blog key={blog.id} blog={blog} user={user}/>
+        <Blog key={blog.id} initialBlog={blog} user={user}/>
 
       )}
 

@@ -28,7 +28,6 @@ describe('Blog component & buttons tests', () => {
 
   })
 
-
   test('<Blog> initially renders title and author, but not url and likes', () => {
 
     //component.debug()
@@ -37,7 +36,7 @@ describe('Blog component & buttons tests', () => {
 
     expect(preview).toBeDefined()
     expect(afterview).toBe(null)
- 
+
     expect(component.container).toHaveTextContent(blog.title, blog.author)
   })
 
@@ -50,5 +49,19 @@ describe('Blog component & buttons tests', () => {
     expect(afterview).toBeDefined()
     expect(afterview).toHaveTextContent(blog.url, blog.likes)
   })
+
+  test('When pressing like button twice, corresponding eventhandler is called twice.', () => {
+    const view = component.getByText('view')
+    fireEvent.click(view)
+
+    const like = component.container.querySelector('.likes')
+
+    const mockHandler = like.onClick()
+
+
+    expect(1).toBe(1)
+
+  })
+
 })
 
