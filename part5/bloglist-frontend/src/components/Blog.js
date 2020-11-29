@@ -77,7 +77,7 @@ const Blog = ({ initialBlog, user }) => {
     return (
       <div style={blogStyle} className="previewBlog">
         {blog.title} by {blog.author}
-        <button type="button" onClick={toggleVisibility}>view</button>
+        <button type="button" onClick={toggleVisibility} id="viewButton">view</button>
       </div>
     )
   }
@@ -89,9 +89,9 @@ const Blog = ({ initialBlog, user }) => {
         <button type="button" onClick={toggleVisibility}>hide</button>
       </div>
       <div>{blog.url}</div>
-      <div className="likes">
+      <div className="likes" id="likeAmount">
         {blog.likes}
-        <button type="button" onClick={addLike}>like</button>
+        <button type="button" onClick={addLike} id="likeButton">like</button>
       </div>
 
       <div>{blog.user.name}</div>

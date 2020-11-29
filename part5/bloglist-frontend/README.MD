@@ -25,3 +25,10 @@ Will start using temporary README's to document progress and plan stuff.
 	Some simple errors (id: '..' missing in newBlog sent to server..) fixed
 	and now liking several times works. Removed [likes] state from <Blog> 
 	and replaced it with the actual blog in question... nice. 
+
+-5.20 =>e2e testing was allright.. not really, its okay, but this assignment I
+	worked a long time on. Apparently setting localStorage items and getting 
+	them right after one another in cypress tests doesn't really work.
+	refactored both into login() and createBlog() commands in support/commands.js
+
+

@@ -46,6 +46,7 @@ describe('login tests:', function () {
 })
 
 describe('Logged-in functionality: ', function () {
+
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3001/api/test/reset')
 
@@ -80,6 +81,44 @@ describe('Logged-in functionality: ', function () {
     cy.request('GET', 'http://localhost:3001/api/blogs').then(response => {
       console.log(response.body)
     })
+
+  })
+
+})
+
+describe('liking blogs: ', function () {
+  beforeEach(function () {
+    cy.request('POST', 'http://localhost:3001/api/test/reset')
+
+    const user = {
+      name: 'BREAL',
+      username: 'cypresshill',
+      password: 'braindamage'
+    }
+    // create new user to test with
+    cy.request('POST', 'http://localhost:3001/api/users', user)
+
+    // login request to that user
+    // have to use command.js for some reason, token is null otherwise.
+    cy.login(user)
+
+    const blogUno = {
+      title: 'Denzel Washing',
+      author: 'Lenovo',
+      url: 'vulfpeck.io'
+    }
+
+    cy.createBlog(blogUno)
+    cy.visit('http://localhost:3000')
+  })
+
+  it('user can like a damn bLog outthere; ', function () {
+    cy.get('#viewButton').click()
+
+    cy.get('#likeAmount').should('contain', 0)
+
+    cy.get('#likeButton').click()
+    cy.get('#likeAmount').should('contain', 1)
 
 
   })
