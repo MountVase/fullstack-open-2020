@@ -40,6 +40,7 @@ const BlogForm = () => {
   }
 
 
+  // add id:s to inputs for cypress testing
   return (
     <div>
       <Notification props={notif}></Notification>
@@ -51,6 +52,7 @@ const BlogForm = () => {
             value={title}
             name="title: "
             onChange={({ target }) => setTitle(target.value)}
+            id="titleInput"
           />
         </div>
         <div>
@@ -60,6 +62,7 @@ const BlogForm = () => {
             value={author}
             name="author: "
             onChange={({ target }) => setAuthor(target.value)}
+            id="authorInput"
           />
         </div>
         <div>
@@ -69,10 +72,11 @@ const BlogForm = () => {
             value={url}
             name="url: "
             onChange={({ target }) => setUrl(target.value)}
+            id="urlInput"
           ></input>
         </div>
         <div>
-          <button type="submit">create</button>
+          <button type="submit" id="createButton">create</button>
         </div>
       </form>
     </div>
