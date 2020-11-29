@@ -34,23 +34,10 @@ Cypress.Commands.add('login', (user) => {
   })
 })
 
-Cypress.Commands.add('asshole', ({ title, author, url, likes = 0 }) => {
-  cy.request({
-    url: 'http://localhost:3001/api/blogs',
-    method: 'POST',
-    body: { title, author, url, likes },
-    headers: {
-      Authorization: `bearer ${
-        JSON.parse(localStorage.getItem('loggedInUser')).token
-      }`,
-    },
-  })
 
-  cy.visit('http://localhost:3000')
-})
 
 Cypress.Commands.add('createBlog', (blog) => {
-  cy.request({method:'POST', url:'http://localhost:3001/api/blogs', 
+  cy.request({ method:'POST', url:'http://localhost:3001/api/blogs', 
     body: blog, headers: {
       Authorization: `bearer ${JSON.parse(localStorage.getItem('loggedInUser')).token}`
     } })

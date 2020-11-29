@@ -64,7 +64,7 @@ const Blog = ({ initialBlog, user }) => {
     if (blog.user.username.toString() === user.username.toString()) {
       return (
         <div className="button">
-          <button type="button" onClick={deleteBlog}>remove</button>
+          <button type="button" onClick={deleteBlog} id="removeBlogButton">remove</button>
         </div>
       )
     } else {

@@ -86,7 +86,7 @@ describe('Logged-in functionality: ', function () {
 
 })
 
-describe('liking blogs: ', function () {
+describe('liking blogs & deleting them: ', function () {
   beforeEach(function () {
     cy.request('POST', 'http://localhost:3001/api/test/reset')
 
@@ -122,4 +122,14 @@ describe('liking blogs: ', function () {
 
 
   })
+
+  it('appropriate user can remove a blog ', function () {
+    cy.get('#viewButton').click()
+    cy.get('#removeBlogButton').click()
+    cy.on('window:confirm', () => true)
+
+    cy.visit('http://localhost:3000')
+    cy.contains('Denzel Washing').should('not.exist')
+  } )
+
 })
