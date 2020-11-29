@@ -54,12 +54,12 @@ describe('Blog component & buttons tests', () => {
     const view = component.getByText('view')
     fireEvent.click(view)
 
-    const like = component.container.querySelector('.likes')
+    const mockHandler = jest.fn()
 
-    const mockHandler = like.onClick()
+    const like = component.container.querySelector('button:nth-child(2)')
 
+    fireEvent.click(like)
 
-    expect(1).toBe(1)
 
   })
 

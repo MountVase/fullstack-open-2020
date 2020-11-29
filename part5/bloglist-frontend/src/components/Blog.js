@@ -60,8 +60,7 @@ const Blog = ({ initialBlog, user }) => {
   }
 
   const buttonVisibility = () => {
-    console.log('blog USER: ', JSON.stringify(blog.user))
-    console.log('user USER: ', JSON.stringify(user))
+
     if (blog.user.username.toString() === user.username.toString()) {
       return (
         <div className="button">
