@@ -35,7 +35,10 @@ const reducer = (state = initialState, action) => {
       }
       return state.map(a => a.id !== id ? a : newAnecdote)
     }
-    
+    case 'CREATE': {
+      // maybe.asObject instead? .map(asObjects) is only run to the anecdotesAtStart...
+      return [...state, asObject(action.data)]
+    }
     default:
   }
 
