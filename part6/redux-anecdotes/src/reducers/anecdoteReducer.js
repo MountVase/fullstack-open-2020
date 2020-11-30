@@ -23,10 +23,7 @@ export const vote = (id) => {
   return { type: 'VOTE', data: { id : id} }
 }
 
-export const addAnecdote = (event) => {
-  event.preventDefault()
-  const content = event.target.anecdote.value
-
+export const createAnecdote = (content) => {
   return { type: 'CREATE', data: content}
 }
 
