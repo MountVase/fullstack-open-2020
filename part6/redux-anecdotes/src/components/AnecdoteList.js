@@ -6,7 +6,19 @@ import { displayNotification } from '../reducers/notificationReducer'
 
 
 const AnecdoteList = () => {
-    const anecdotes = useSelector(state => state.anecdotes.sort((a, b) => b.votes - a.votes))
+    // check filtering here before rendering.
+
+    
+    const anecdotes = useSelector(state => {
+      if (state.filter === '') {
+        return state.anecdotes.sort((a, b) => b.votes - a.votes)
+      }
+      else {
+        return state.anecdotes.filter(anec => anec.content.toLowerCase()
+        .includes(state.filter.toLowerCase()))
+        .sort((a, b) => b.votes - a.votes)}})
+ 
+    
     const dispatch = useDispatch()
 
     const vote = (id) => {
@@ -20,6 +32,7 @@ const AnecdoteList = () => {
       }, 5000)
     }
 
+    
     return (
     <div>
       {anecdotes.map(anecdote =>
