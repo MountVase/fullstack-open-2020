@@ -11,8 +11,16 @@ const asObject = (anecdote) => {
 }
 
 
-export const addVote = (id) => {
-  return { type: 'VOTE', data: { id : id} }
+export const addVote = (anecdote) => {
+  return async dispatch => {
+    const newAnecdote = {
+      ...anecdote,
+      votes: anecdote.votes + 1
+    }
+    await anecdoteService.updateNew(newAnecdote)
+    dispatch({ type: 'VOTE', data: newAnecdote})
+  }
+  
 }
 
 export const createAnecdote = (content) => {
