@@ -27,10 +27,13 @@ export const createAnecdote = (content) => {
   return { type: 'CREATE', data: content}
 }
 
+export const initializeDb = (content) => {
+  return { type: 'INIT_DB', data: content}
+}
 
-const anecdoteReducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
+
+
+const anecdoteReducer = (state = [], action) => {
 
   switch (action.type) {
     case 'VOTE': {
@@ -47,6 +50,12 @@ const anecdoteReducer = (state = initialState, action) => {
       // maybe.asObject instead? .map(asObjects) is only run to the anecdotesAtStart...
       return [...state, asObject(action.data)]
     }
+
+    case 'INIT_DB': {
+      return action.data
+    }
+    
+
     default:
   }
 
