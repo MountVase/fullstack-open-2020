@@ -1,11 +1,24 @@
 
 
+
 export const displayNotification = notif => {
     return {
         type: 'NOTIFY',
         notification: notif
     }
 }
+
+export const ezDisplayNotification = (notification, time) => {
+    return async dispatch => {
+        // can return timer in the data, will be triggered by Notification
+        const timer = setTimeout(() => {
+            displayNotification("")
+        }, time * 1000)
+
+        dispatch({ type: 'NOTIFY', notification: [ notification, timer] })
+    }
+}
+
 
 const initialState = ''
 
