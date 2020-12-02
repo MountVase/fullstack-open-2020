@@ -4,11 +4,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { addVote } from '../reducers/anecdoteReducer'
 import { displayNotification } from '../reducers/notificationReducer'
 
+import { connect } from 'react-redux'
 
+// instead of props, i can destructure so it becomes clearer ({ stuff, inside, props })
+// wtf is that even needed?
 const AnecdoteList = () => {
     // check filtering here before rendering.
 
-    
+
     const anecdotes = useSelector(state => {
       if (state.filter === '') {
         return state.anecdotes.sort((a, b) => b.votes - a.votes)
@@ -51,4 +54,20 @@ const AnecdoteList = () => {
     )
 }
 
-export default AnecdoteList
+const mapStateToProps = (state) => {
+  return {
+    anecdotes: state.anecdotes,
+    filter: state.filter
+  }
+}
+
+const mapDispatchToProps = {
+  displayNotification
+}
+
+
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnecdoteList)
