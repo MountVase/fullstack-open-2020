@@ -10,9 +10,9 @@ import filterReducer from './reducers/filterReducer'
 // these names: anecdotes and notifications, feed into the useSelector(state => state.anecdotes)
 
 const reducer = combineReducers({
-    anecdotes: anecdoteReducer,
-    notifications: notificationReducer,
-    filter: filterReducer
+  anecdotes: anecdoteReducer,
+  notifications: notificationReducer,
+  filter: filterReducer
 })
 
 

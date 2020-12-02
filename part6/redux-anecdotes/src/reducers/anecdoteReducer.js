@@ -44,27 +44,27 @@ export const initializeDb = () => {
 const anecdoteReducer = (state = [], action) => {
 
   switch (action.type) {
-    case 'VOTE': {
-      const id = action.data.id
-      const anecdote = state.find(anec => anec.id === id)
-      console.log(anecdote)
-      const newAnecdote = {
-        ...anecdote, 
-        votes: anecdote.votes + 1
-      }
-      return state.map(a => a.id !== id ? a : newAnecdote)
+  case 'VOTE': {
+    const id = action.data.id
+    const anecdote = state.find(anec => anec.id === id)
+    console.log(anecdote)
+    const newAnecdote = {
+      ...anecdote, 
+      votes: anecdote.votes + 1
     }
-    case 'CREATE': {
-      // maybe.asObject instead? .map(asObjects) is only run to the anecdotesAtStart...
-      return [...state, asObject(action.data)]
-    }
+    return state.map(a => a.id !== id ? a : newAnecdote)
+  }
+  case 'CREATE': {
+    // maybe.asObject instead? .map(asObjects) is only run to the anecdotesAtStart...
+    return [...state, asObject(action.data)]
+  }
 
-    case 'INIT_DB': {
-      return action.data
-    }
+  case 'INIT_DB': {
+    return action.data
+  }
     
 
-    default:
+  default:
   }
 
   return state
