@@ -7,14 +7,25 @@ export const displayNotification = notif => {
   }
 }
 
+let timeoutId = null
+
 export const ezDisplayNotification = (notification, time) => {
   return async dispatch => {
     // can return timer in the data, will be triggered by Notification
-    const timer = setTimeout(() => {
-      displayNotification('')
+    dispatch({ type: 'NOTIFY', notification: notification })
+    
+    if (timeoutId !== null) clearTimeout(timeoutId)
+
+    timeoutId = setTimeout(() => {
+      dispatch(removeNotification())
     }, time * 1000)
 
-    dispatch({ type: 'NOTIFY', notification: [ notification, timer] })
+  }
+}
+
+export const removeNotification = () => {
+  return {
+    type: 'CLEAR'
   }
 }
 
@@ -28,6 +39,10 @@ const notificationReducer = (state = initialState, action) => {
   switch(action.type) {
   case 'NOTIFY': {
     return action.notification
+  }
+
+  case 'CLEAR': {
+    return ''
   }
 
   default: return state

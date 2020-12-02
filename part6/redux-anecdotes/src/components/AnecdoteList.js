@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 import { addVote } from '../reducers/anecdoteReducer'
 import { displayNotification } from '../reducers/notificationReducer'
+import { ezDisplayNotification } from '../reducers/notificationReducer'
 
 import { connect } from 'react-redux'
 
@@ -23,17 +24,23 @@ const AnecdoteList = () => {
  
     
     const dispatch = useDispatch()
+    
 
     const vote = (anecdote) => {
       const id = anecdote.id
       dispatch(addVote(anecdote))
 
       const currentAnecdote = anecdotes.find(a => a.id === id)
-      dispatch(displayNotification(`you voted ${currentAnecdote.content}`))
-      setTimeout(() => {
+
+
+      dispatch(ezDisplayNotification(`you voted ${currentAnecdote.content}`, 5))
+      //dispatch(displayNotification(`you voted ${currentAnecdote.content}`))
+
+      /*
+      timeoutId = setTimeout(() => {
         dispatch(displayNotification(""))
       }, 5000)
-    
+      */
     }
 
     
@@ -62,7 +69,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  displayNotification
+  ezDisplayNotification
 }
 
 

@@ -34,6 +34,8 @@ const mapDispatchToProps = {
   createAnecdote
 }
 
+// optional: export default connect(null, { createAnecdote })
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
