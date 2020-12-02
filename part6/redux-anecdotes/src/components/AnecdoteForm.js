@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 
 import { createAnecdote } from '../reducers/anecdoteReducer'
-
+import { connect } from 'react-redux'
 
 const AnecdoteForm = () => {
     const dispatch = useDispatch()
@@ -26,4 +26,15 @@ const AnecdoteForm = () => {
     )
 }
 
-export default AnecdoteForm
+const mapStateToProps = (state) => {
+  return null
+}
+
+const mapDispatchToProps = {
+  createAnecdote
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AnecdoteForm)
