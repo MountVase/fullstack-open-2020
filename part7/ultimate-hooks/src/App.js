@@ -21,22 +21,26 @@ const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
   // ...
 
-  const getAll = async () => {
-    const response = await axios.get(baseUrl)
-    setResources(response.data)
-    return response.data
-  }
+  // instead of exporting method getAll, how about we do it once something in resources changes?
+  // const getAll = async () => {
+    // const response = await axios.get(baseUrl)
+    // setResources(response.data)
+    // return response.data
+  // }
+
+  useEffect(() => {
+    axios.get(baseUrl).then(response => setResources(response.data))
+  }, [])
 
   const create = async (resource) => {
     const response = await axios.post(baseUrl, resource)
 
     // setResource can be called if POST is successfull
-
-    return response.data
+    setResources([...resources, response.data])
   }
 
   const service = {
-    create, getAll
+    create
   }
 
   return [
@@ -51,11 +55,7 @@ const App = () => {
 
   const [notes, noteService] = useResource('http://localhost:3005/notes')
   const [persons, personService] = useResource('http://localhost:3005/persons')
-
-  useEffect(() => {
-    noteService.getAll()
-    personService.getAll()
-  }, [])
+  
 
   const handleNoteSubmit = (event) => {
     event.preventDefault()
