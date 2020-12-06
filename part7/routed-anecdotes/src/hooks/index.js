@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 
 export const useField = (type) => {
@@ -9,6 +9,9 @@ export const useField = (type) => {
         setValue(event.target.value)
     }
 
+    const reset = () => {
+        setValue('')
+    }
     // returns an object with all required fields for <input />
 
     return {

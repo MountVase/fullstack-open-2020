@@ -71,11 +71,12 @@ const CreateNew = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     props.addNew({
-      content,
-      author,
-      info,
-      votes: 0
+      content: content.value,
+      author: author.value,
+      info: info.value
     })
+
+
     // TODO, notif + reroute
     history.push('/')
   }
@@ -96,7 +97,8 @@ const CreateNew = (props) => {
           url for more info
           <input {...info}></input>
         </div>
-        <button>create</button>
+        <button type="submit">create</button>
+
       </form>
     </div>
   )
