@@ -81,6 +81,13 @@ const CreateNew = (props) => {
     history.push('/')
   }
 
+  const resetFields = (e) => {
+    e.preventDefault()
+    content.reset()
+    author.reset()
+    info.reset()
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -98,7 +105,7 @@ const CreateNew = (props) => {
           <input {...info}></input>
         </div>
         <button type="submit">create</button>
-
+        <button type="reset" onClick={resetFields}>Reset</button>
       </form>
     </div>
   )
@@ -167,6 +174,7 @@ const App = () => {
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
+
     setNotification(`a new anecdote ${anecdote.content} created!`)
     setTimeout(() => setNotification(''), 10000)
 
