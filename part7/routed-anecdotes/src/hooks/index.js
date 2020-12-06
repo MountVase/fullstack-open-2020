@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 
 export const useField = (type) => {
@@ -15,9 +15,10 @@ export const useField = (type) => {
     // returns an object with all required fields for <input />
 
     return {
+        reset,
         type,
         value,
-        onChange,
-        reset
+        onChange
+        
     }
 }

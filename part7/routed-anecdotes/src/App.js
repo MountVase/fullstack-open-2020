@@ -60,9 +60,11 @@ const Footer = () => (
 
 
 const CreateNew = (props) => {
-  const content = useField('text')
-  const author = useField('text')
-  const info = useField('text')
+
+  // spread syntax need key...
+  const {reset: resetContent, ...content} = useField('text')
+  const {reset: resetAuthor ,...author} = useField('text')
+  const {reset: resetInfo, ...info} = useField('text')
     
   
   const history = useHistory()
@@ -83,9 +85,9 @@ const CreateNew = (props) => {
 
   const resetFields = (e) => {
     e.preventDefault()
-    content.reset()
-    author.reset()
-    info.reset()
+    resetContent()
+    resetAuthor()
+    resetInfo()
   }
 
   return (
