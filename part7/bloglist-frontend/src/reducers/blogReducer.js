@@ -8,6 +8,15 @@ export const initializeDb = () => {
   }
 }
 
+export const createBlog = (blog) => {
+  return async dispatch => {
+    const response = await blogService.create(blog)
+    console.log(response)
+    dispatch({ type: 'CREATE', data: blog })
+
+  }
+}
+
 
 export const blogReducer = (state = [], action) => {
   switch (action.type) {
@@ -18,6 +27,7 @@ export const blogReducer = (state = [], action) => {
   case 'INIT_DB': {
     return action.data
   }
+
 
   default: return state
   }

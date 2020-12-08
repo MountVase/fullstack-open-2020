@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import blogService from '../services/blogService'
 import { useDispatch } from 'react-redux'
 
 import { displayNotification } from '../reducers/notificationReducer'
+import { createBlog } from '../reducers/blogReducer'
 
 const BlogForm = () => {
 
@@ -24,9 +24,7 @@ const BlogForm = () => {
 
     try {
 
-      const response = await blogService.create(blog)
-      console.log('HandleCreation response: ', response)
-
+      dispatch(createBlog( blog ))
       dispatch(displayNotification({ message: `a new blog ${blog.title} by ${blog.author} added`, style: 'loginSuccess' } , 5 ))
 
 
