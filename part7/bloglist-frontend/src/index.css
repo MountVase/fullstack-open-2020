@@ -1,0 +1,34 @@
+.loginSuccess {
+    background-color: #9ae7ff;
+    border: 4px solid #24211a;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.loginFailed {
+    background-color: #cd76cf;
+    border: 4px solid #24211a;
+    font-size: 15px;
+    padding: 10px;
+}
+
+.button {
+	background-color:#ffa914;
+	border-radius:42px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Times New Roman;
+	font-size:22px;
+	padding:11px 11px;
+	text-decoration:none;
+}
+.button:hover {
+	background-color:#262626;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+        
