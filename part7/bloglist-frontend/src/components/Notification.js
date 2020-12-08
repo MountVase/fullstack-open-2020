@@ -1,12 +1,17 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
-const Notification = ({ props }) => {
-  // this is added as a component, and constantly checks if it should display a message
+const Notification = () => {
 
-  if (props === null) return null
+  // state currently only has notifications, refactor needed later
+  const notification = useSelector(state => state)
+
+
+  if (notification === null) return null
+
 
   else return (
-    <div className={props.type}>{props.message}</div>
+    <div className={notification.style}>{notification.message}</div>
   )
 }
 

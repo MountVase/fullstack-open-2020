@@ -10,6 +10,8 @@ import BlogForm from './components/BlogForm'
 import blogService from './services/blogService'
 import loginService from './services/loginService'
 
+import { useDispatch } from 'react-redux'
+
 import './index.css'
 
 
@@ -24,6 +26,8 @@ const App = () => {
   // played around with order of a, b. now seems to work.
   const sortedByLikes = [...blogs.sort((a, b) => b.likes - a.likes)]
 
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -58,7 +62,7 @@ const App = () => {
       setUsername('')
       setPassword('')
 
-      setNotif({ message: `welcome back, ${user.name}.`, type: 'loginSuccess' })
+      setNotif({ message: `welcome back, ${user.name}.`, style: 'loginSuccess' })
       // after set seconds, setNotif to null again
       setTimeout(() => {
         setNotif(null)
@@ -67,10 +71,10 @@ const App = () => {
 
     } catch (exception) {
       console.log(exception)
-      setNotif({ message: 'wrong username or passss', type: 'loginFailed' })
+      dispatch({ type: 'NOTIFY', notification: { message: 'wrong username or passss', style: 'loginFailed' } })
 
       setTimeout(() => {
-        setNotif(null)
+        dispatch({ type: 'CLEAR'})
       }, 5000)
     }
   }
