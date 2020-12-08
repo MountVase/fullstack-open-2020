@@ -12,6 +12,9 @@ import loginService from './services/loginService'
 
 import { useDispatch } from 'react-redux'
 
+import { displayNotification } from './reducers/notificationReducer'
+
+
 import './index.css'
 
 
@@ -21,7 +24,6 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
-  const [notif, setNotif] = useState(null)
 
   // played around with order of a, b. now seems to work.
   const sortedByLikes = [...blogs.sort((a, b) => b.likes - a.likes)]
@@ -62,20 +64,13 @@ const App = () => {
       setUsername('')
       setPassword('')
 
-      setNotif({ message: `welcome back, ${user.name}.`, style: 'loginSuccess' })
-      // after set seconds, setNotif to null again
-      setTimeout(() => {
-        setNotif(null)
-      }, 5000)
+      dispatch(displayNotification({ message: `welcome back, ${user.name}.`, style: 'loginSuccess' }, 5 ))
 
 
     } catch (exception) {
       console.log(exception)
-      dispatch({ type: 'NOTIFY', notification: { message: 'wrong username or passss', style: 'loginFailed' } })
+      dispatch(displayNotification( { message: 'wrong username or passss', style: 'loginFailed' } , 5 ))
 
-      setTimeout(() => {
-        dispatch({ type: 'CLEAR'})
-      }, 5000)
     }
   }
 
@@ -91,7 +86,7 @@ const App = () => {
   if (user === null) {
 
     const loginform = <div>
-      <Notification props={notif}></Notification>
+      <Notification></Notification>
       <LoginForm
         onSubmit={handleLogin}
         username={username}
@@ -107,7 +102,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification props={notif}></Notification>
+      <Notification></Notification>
       <h2>blogs</h2>
       <div>{user.name} logged in
         <button onClick={handleLogout}> logout</button>

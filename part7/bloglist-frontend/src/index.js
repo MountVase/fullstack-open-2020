@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import { Provider } from 'react-redux'
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
 import { notificationReducer } from './reducers/notificationReducer'
 
-const store = createStore(notificationReducer)
+const store = createStore(notificationReducer, applyMiddleware(thunk))
 
 
 

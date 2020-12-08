@@ -10,4 +10,10 @@
 	2. Move notification state to Notification component with { useSelector }
 	3. instead of setNotif & timeout, we can do both via notificationReducer.
 	4. install redux-thunk to allow for asynchrynous action-creators, fixes the timeout.
+	
+	This worked surprisingly well. Way to go baby steps!
+	PS. found a fun bug, Notification is rendered both in App and BlogForm, 
+	but one can easily centralise the rendering into only App.js, (dispatching
+	can be done from anywhere!)
+
 

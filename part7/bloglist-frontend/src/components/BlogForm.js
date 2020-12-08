@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogService'
-import Notification from './Notification'
+import { useDispatch } from 'react-redux'
+
+import { displayNotification } from '../reducers/notificationReducer'
 
 const BlogForm = () => {
-
-  const [notif, setNotif] = useState(null)
 
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+
+  const dispatch = useDispatch()
 
   const handleCreation = async (event) => {
     event.preventDefault()
@@ -24,10 +26,9 @@ const BlogForm = () => {
 
       const response = await blogService.create(blog)
       console.log('HandleCreation response: ', response)
-      setNotif({ message: `a new blog ${blog.title} by ${blog.author} added`, type: 'loginSuccess' })
-      setTimeout(() => {
-        setNotif(null)
-      }, 5000)
+
+      dispatch(displayNotification({ message: `a new blog ${blog.title} by ${blog.author} added`, style: 'loginSuccess' } , 5 ))
+
 
     } catch (exception) {
       console.log(exception)
@@ -43,7 +44,6 @@ const BlogForm = () => {
   // add id:s to inputs for cypress testing
   return (
     <div>
-      <Notification props={notif}></Notification>
       <form onSubmit={handleCreation}>
         <div>
         title
