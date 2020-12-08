@@ -10,16 +10,17 @@ import BlogForm from './components/BlogForm'
 import blogService from './services/blogService'
 import loginService from './services/loginService'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { displayNotification } from './reducers/notificationReducer'
+import { initializeDb} from './reducers/blogReducer'
 
 
 import './index.css'
 
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  const blogs = useSelector(state => state.blogs)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -32,9 +33,7 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
+    dispatch(initializeDb())
   }, [])
 
   useEffect(() => {

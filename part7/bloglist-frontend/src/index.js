@@ -2,13 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import { Provider } from 'react-redux'
-
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import { notificationReducer } from './reducers/notificationReducer'
-
-const store = createStore(notificationReducer, applyMiddleware(thunk))
-
+import { store } from './store'
 
 
 ReactDOM.render(
