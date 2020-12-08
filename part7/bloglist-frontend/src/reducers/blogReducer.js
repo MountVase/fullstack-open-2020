@@ -11,9 +11,17 @@ export const initializeDb = () => {
 export const createBlog = (blog) => {
   return async dispatch => {
     const response = await blogService.create(blog)
-    console.log(response)
+    console.log('createBlog resp: ', response)
     dispatch({ type: 'CREATE', data: blog })
 
+  }
+}
+
+export const removeBlog = (id) => {
+  return async dispatch => {
+    const response = await blogService.remove(id)
+    console.log('removeBlog resp: ', response)
+    dispatch({ type: 'DELETE', data: id })
   }
 }
 
@@ -28,6 +36,9 @@ export const blogReducer = (state = [], action) => {
     return action.data
   }
 
+  case 'DELETE': {
+    return [...state.filter(blog => blog.id !== action.data)]
+  }
 
   default: return state
   }

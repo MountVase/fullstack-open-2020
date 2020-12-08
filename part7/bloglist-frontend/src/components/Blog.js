@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import blogService from '../services/blogService'
 
+import { useDispatch } from 'react-redux'
+import { removeBlog } from '../reducers/blogReducer'
+
+
 const Blog = ({ initialBlog, user }) => {
 
   const [showAll, setShowAll] = useState(false)
   const [blog, setBlog] = useState(initialBlog)
 
+
+  const dispatch = useDispatch()
   const toggleVisibility = () => {
     setShowAll(!showAll)
   }
@@ -42,7 +48,7 @@ const Blog = ({ initialBlog, user }) => {
     marginBottom: 5,
   }
 
-  const deleteBlog = async (event) => {
+  const deleteBlog = (event) => {
     event.preventDefault()
 
     const bool = window.confirm(`Remove blog "${blog.title} by ${blog.author}?"`)
@@ -50,7 +56,8 @@ const Blog = ({ initialBlog, user }) => {
     if (bool) {
 
       try {
-        await blogService.remove(blog.id)
+        // await blogService.remove(blog.id)
+        dispatch(removeBlog(blog.id))
         console.log('deleting successful')
 
       } catch (exception) {
