@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
@@ -8,11 +8,8 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 
 import blogService from './services/blogService'
-import loginService from './services/loginService'
-
 import { useDispatch, useSelector } from 'react-redux'
 
-import { displayNotification } from './reducers/notificationReducer'
 import { initializeDb} from './reducers/blogReducer'
 
 import { setUser } from './reducers/signedInUserReducer'
@@ -23,9 +20,6 @@ import './index.css'
 
 const App = () => {
   const blogs = useSelector(state => state.blogs)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
   const user = useSelector(state => state.signedInUser)
 
   // played around with order of a, b. now seems to work.
@@ -47,41 +41,12 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
-
-    try {
-      const user = await loginService.login({
-        username, password,
-      })
-
-      window.localStorage.setItem(
-        'loggedInUser', JSON.stringify(user)
-      )
-      blogService.setToken(user.token)
-      console.log('handleLogin setting of token: ', user.token)
-
-      dispatch(setUser(user))
-      setUsername('')
-      setPassword('')
-
-      dispatch(displayNotification({ message: `welcome back, ${user.name}.`, style: 'loginSuccess' }, 5 ))
-
-
-    } catch (exception) {
-      console.log(exception)
-      dispatch(displayNotification( { message: 'wrong username or passss', style: 'loginFailed' } , 5 ))
-
-    }
-  }
 
   const handleLogout = async (event) => {
     event.preventDefault()
     window.localStorage.removeItem('loggedInUser')
     // setUser(null)
     dispatch(clearUser())
-    setUsername('')
-    setPassword('')
   }
 
   // handleLogin, username, setUsername, password, setPassword
@@ -89,13 +54,7 @@ const App = () => {
 
     const loginform = <div>
       <Notification></Notification>
-      <LoginForm
-        onSubmit={handleLogin}
-        username={username}
-        setUsername={setUsername}
-        password={password}
-        setPassword={setPassword}
-      ></LoginForm>
+      <LoginForm></LoginForm>
     </div>
     return (
       loginform
