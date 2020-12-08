@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { displayNotification } from './reducers/notificationReducer'
 import { initializeDb} from './reducers/blogReducer'
 
+import { setUser } from './reducers/signedInUserReducer'
+import { clearUser } from './reducers/signedInUserReducer'
 
 import './index.css'
 
@@ -23,8 +25,8 @@ const App = () => {
   const blogs = useSelector(state => state.blogs)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
 
+  const user = useSelector(state => state.signedInUser)
 
   // played around with order of a, b. now seems to work.
   const sortedByLikes = [...blogs.sort((a, b) => b.likes - a.likes)]
@@ -40,7 +42,7 @@ const App = () => {
     const loggedInUser = window.localStorage.getItem('loggedInUser')
     if (loggedInUser) {
       const user = JSON.parse(loggedInUser)
-      setUser(user)
+      dispatch(setUser(user))
       blogService.setToken(user.token)
     }
   }, [])
@@ -59,7 +61,7 @@ const App = () => {
       blogService.setToken(user.token)
       console.log('handleLogin setting of token: ', user.token)
 
-      setUser(user)
+      dispatch(setUser(user))
       setUsername('')
       setPassword('')
 
@@ -76,7 +78,8 @@ const App = () => {
   const handleLogout = async (event) => {
     event.preventDefault()
     window.localStorage.removeItem('loggedInUser')
-    setUser(null)
+    // setUser(null)
+    dispatch(clearUser())
     setUsername('')
     setPassword('')
   }
