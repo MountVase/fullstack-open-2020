@@ -7,6 +7,7 @@ import Toggle from './components/Toggle'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Users from './components/Users'
+import User from './components/User'
 
 import blogService from './services/blogService'
 import { useDispatch, useSelector } from 'react-redux'
@@ -18,7 +19,8 @@ import { clearUser } from './reducers/signedInUserReducer'
 
 import {
   BrowserRouter as Router,
-  Switch, Route, Link
+  Switch, Route, Link,
+  useHistory
 } from 'react-router-dom'
 
 
@@ -100,6 +102,10 @@ const App = () => {
   return (
     <Router>
       <Switch>
+        <Route path="/users/:id">
+          <Header></Header>
+          <User></User>
+        </Route>
         <Route path="/users">
           <Header></Header>
           <Users></Users>
