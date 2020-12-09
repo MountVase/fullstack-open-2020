@@ -33,6 +33,16 @@ export const likeBlog = (id, updatedBlog) => {
   }
 }
 
+export const addComment = (id, comment) => {
+  return async dispatch => {
+    console.log('before sending comment off m8: ', comment)
+
+    const response = await blogService.addComment(id, comment)
+    console.log('actioncreator comment: ',response)
+    dispatch({ type: 'COMMENT', data: { id: id, comment: comment }})
+  }
+}
+
 
 
 
@@ -62,6 +72,17 @@ export const blogReducer = (state = [], action) => {
 
     return state.map(blog => blog.id !== id ? blog : newBlog)
 
+  }
+
+  case 'COMMENT': {
+    const id = action.data.id
+    const comment = action.data.comment
+
+
+    const newBlog = state.find(blog => blog.id === id)
+    newBlog.comments = [...newBlog.comments, comment]
+
+    return state.map(blog => blog.id !== id ? blog : newBlog)
   }
 
   default: return state

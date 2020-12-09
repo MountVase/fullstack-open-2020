@@ -23,6 +23,19 @@ const create = async newBlog => {
   return response.data
 }
 
+const addComment = async (blogId, comment) => {
+  console.log('blogservice received comment: ', comment)
+  const config = {
+    headers: { 'content-type': 'application/json' }
+  }
+  const body = { comment: comment }
+
+  const response = await axios.post(`http://localhost:3001/api/blogs/${blogId}/comments`, body, config)
+  // returns entire blog, which we can benefit from in reducer.
+  console.log('blogservice comment: ', response.data)
+  return response.data
+}
+
 const update = async (id, newBlog) => {
   const auth = {
     headers: { Authorization: token }
@@ -43,4 +56,4 @@ const remove = async id => {
 
 
 
-export default { getAll, create, setToken, update, remove }
+export default { getAll, create, setToken, update, remove, addComment }

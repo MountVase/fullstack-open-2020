@@ -1,12 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { likeBlog } from '../reducers/blogReducer'
 import { Link } from 'react-router-dom'
+import { addComment } from '../reducers/blogReducer'
 
 
 const Blogg = () => {
+  const [comment, setComment] = useState('')
+
   const blogs= useSelector(state => state.blogs)
   const id = useParams().id
 
@@ -16,7 +19,6 @@ const Blogg = () => {
 
 
   const addLike = async () => {
-
     const newLikes = blog.likes + 1
 
     // new blogs user (id only) is fetched from the current blog.
@@ -42,6 +44,18 @@ const Blogg = () => {
     marginBottom: 5,
   }
 
+  const addCommentToBlog = async (event) => {
+    event.preventDefault()
+
+    try {
+      dispatch(addComment(id, comment))
+      setComment('')
+    } catch (exception) {
+      console.log(exception)
+    }
+
+  }
+
   if (!blog) {
     return null
   }
@@ -61,7 +75,12 @@ const Blogg = () => {
       <div>added by <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link></div>
 
       <h4>comments</h4>
-      {blog.comments.map(comment => <li key={comment}>{comment}</li>)}
+      <form onSubmit={addCommentToBlog}>
+        <input type="text" value={comment} onChange={event => setComment(event.target.value)}></input>
+        <button type="submit">comment</button>
+      </form>
+
+      {blog.comments.map(comment => <li key={Date.now()}>{comment}</li>)}
     </div>
   )
 }
