@@ -56,6 +56,11 @@ const Blogg = () => {
 
   }
 
+  const generateId = () => {
+    const rand = Math.floor(1000 + Math.random() * 9000)
+    return rand
+  }
+
   if (!blog) {
     return null
   }
@@ -80,7 +85,7 @@ const Blogg = () => {
         <button type="submit">comment</button>
       </form>
 
-      {blog.comments.map(comment => <li key={Date.now()}>{comment}</li>)}
+      {blog.comments.map(comment => <li key={generateId()}>{comment}</li>)}
     </div>
   )
 }
