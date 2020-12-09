@@ -69,12 +69,20 @@ const App = () => {
       loginform
     )
   }
+  const padding = {
+    paddingRight: 5
+  }
 
   const Header = () => {
     return (
       <div>
         <Notification></Notification>
         <h2>blogs</h2>
+        <div>
+          <Link style={padding} to="/">blogs</Link>
+          <Link style={padding} to="/users">users</Link>
+        </div>
+
         <div>{user.name} logged in
           <button onClick={handleLogout}> logout</button>
         </div>

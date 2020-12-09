@@ -36,4 +36,12 @@
 --> 7.13Getting all users from backend api/users is turning out to be challenging.
 	Instead, even though i don't really want to, i could store that in redux
 	state... Is that overkill though?
+	Worked this out through a custom hook, useResource.
+
+--> 7.15I now think I see a clear advantage to redux. When I click on blogs, 
+	everything is pre-loaded, and runs smoothly. Users on the other hand,
+	which are fetched every-time from backend via a custom hook, take a 
+	whole lot longer. So I'll implement users to a redux state aswell.
+	Sweet.
+
 
