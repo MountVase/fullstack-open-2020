@@ -1,0 +1,7 @@
+
+POST http://localhost:3001/api/blogs/5fb7e2929e8f267cd267935a/comments
+content-type: application/json
+
+{
+    "comment": "Nice name.. Did your mom give you that??"
+}
