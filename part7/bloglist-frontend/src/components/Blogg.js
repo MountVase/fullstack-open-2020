@@ -60,6 +60,8 @@ const Blogg = () => {
 
       <div>added by <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link></div>
 
+      <h4>comments</h4>
+      {blog.comments.map(comment => <li key={comment}>{comment}</li>)}
     </div>
   )
 }
