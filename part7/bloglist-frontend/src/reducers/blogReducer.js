@@ -1,10 +1,10 @@
 import blogService from '../services/blogService'
 
-export const initializeDb = () => {
+export const initializeBlogs = () => {
   return async dispatch => {
     const blogs = await blogService.getAll()
 
-    dispatch({ type: 'INIT_DB', data: blogs })
+    dispatch({ type: 'INIT_BLOGS', data: blogs })
   }
 }
 
@@ -42,7 +42,7 @@ export const blogReducer = (state = [], action) => {
     // maybe.asObject instead? .map(asObjects) is only run to the anecdotesAtStart...
     return [...state, action.data]
   }
-  case 'INIT_DB': {
+  case 'INIT_BLOGS': {
     return action.data
   }
 

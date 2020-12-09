@@ -1,11 +1,15 @@
 import React from 'react'
-import { useResource } from '../hooks/useResource'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 
 const Users = () => {
-  const [users, setUsers] = useResource('http://localhost:3001/api/users')
-  console.log(users)
+  const users = useSelector(state => state.users)
+
+  
+  if (!users) {
+    return null
+  }
 
   return (
     <div>

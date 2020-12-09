@@ -12,7 +12,8 @@ import Blogg from './components/Blogg'
 import blogService from './services/blogService'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { initializeDb} from './reducers/blogReducer'
+import { initializeBlogs } from './reducers/blogReducer'
+import { initializeUsers } from './reducers/userReducer'
 
 import { setUser } from './reducers/signedInUserReducer'
 import { clearUser } from './reducers/signedInUserReducer'
@@ -38,8 +39,11 @@ const App = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(initializeDb())
+    dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   }, [])
+
+
 
   useEffect(() => {
     const loggedInUser = window.localStorage.getItem('loggedInUser')
