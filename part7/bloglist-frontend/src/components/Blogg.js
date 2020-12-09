@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { likeBlog } from '../reducers/blogReducer'
+import { Link } from 'react-router-dom'
 
 
 const Blogg = () => {
@@ -57,7 +58,7 @@ const Blogg = () => {
         <button type="button" onClick={addLike} id="likeButton">like</button>
       </div>
 
-      <div>added by {blog.user.name}</div>
+      <div>added by <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link></div>
 
     </div>
   )
