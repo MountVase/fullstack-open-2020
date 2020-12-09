@@ -6,6 +6,7 @@ import Toggle from './components/Toggle'
 
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
+import Users from './components/Users'
 
 import blogService from './services/blogService'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,6 +15,12 @@ import { initializeDb} from './reducers/blogReducer'
 
 import { setUser } from './reducers/signedInUserReducer'
 import { clearUser } from './reducers/signedInUserReducer'
+
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link
+} from 'react-router-dom'
+
 
 import './index.css'
 
@@ -61,26 +68,48 @@ const App = () => {
     )
   }
 
-  return (
-    <div>
-      <Notification></Notification>
-      <h2>blogs</h2>
-      <div>{user.name} logged in
-        <button onClick={handleLogout}> logout</button>
+  const Header = () => {
+    return (
+      <div>
+        <Notification></Notification>
+        <h2>blogs</h2>
+        <div>{user.name} logged in
+          <button onClick={handleLogout}> logout</button>
+        </div>
       </div>
+    )
+  }
 
-      <h2>create new</h2>
-      <Toggle buttonLabel="create new blog">
-        <BlogForm>
-        </BlogForm>
-      </Toggle>
+  const Home = () => {
+    return (
+      <div>
+        <h2>create new</h2>
+        <Toggle buttonLabel="create new blog">
+          <BlogForm>
+          </BlogForm>
+        </Toggle>
 
-      {sortedByLikes.map(blog =>
-        <Blog key={blog.id} initialBlog={blog} user={user}/>
+        {sortedByLikes.map(blog =>
+          <Blog key={blog.id} initialBlog={blog} user={user}/>
+        )}
 
-      )}
+      </div>
+    )
+  }
 
-    </div>
+  return (
+    <Router>
+      <Switch>
+        <Route path="/users">
+          <Header></Header>
+          <Users></Users>
+        </Route>
+        <Route path="/">
+          <Header></Header>
+          <Home></Home>
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 

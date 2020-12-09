@@ -33,4 +33,7 @@
 	or? I think I can move handleLogin & handleLogout to LoginForm component
 	which would perhaps be more appropriate. Awesome redux!
 
+--> 7.13Getting all users from backend api/users is turning out to be challenging.
+	Instead, even though i don't really want to, i could store that in redux
+	state... Is that overkill though?
 
