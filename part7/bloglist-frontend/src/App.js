@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 
-import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Toggle from './components/Toggle'
 
@@ -83,6 +82,14 @@ const App = () => {
     )
   }
 
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: '2px solid #0dcfcf',
+    borderWidth: 1,
+    marginBottom: 5,
+  }
+
   const Home = () => {
     return (
       <div>
@@ -93,7 +100,7 @@ const App = () => {
         </Toggle>
 
         {sortedByLikes.map(blog =>
-          <Blog key={blog.id} initialBlog={blog} user={user}/>
+          <div key={blog.id} style={blogStyle}><Link to={`/blogs/${blog.id}`}>{blog.title} by {blog.author}</Link></div>
         )}
 
       </div>
