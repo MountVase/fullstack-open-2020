@@ -8,6 +8,7 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Users from './components/Users'
 import User from './components/User'
+import Blogg from './components/Blogg'
 
 import blogService from './services/blogService'
 import { useDispatch, useSelector } from 'react-redux'
@@ -109,6 +110,10 @@ const App = () => {
         <Route path="/users">
           <Header></Header>
           <Users></Users>
+        </Route>
+        <Route path="/blogs/:id">
+          <Header></Header>
+          <Blogg></Blogg>
         </Route>
         <Route path="/">
           <Header></Header>
