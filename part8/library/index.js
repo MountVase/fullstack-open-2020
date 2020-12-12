@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server')
+const { v4: uuidv4 } = require('uuid')
 
 let authors = [
   {
@@ -93,7 +94,7 @@ const typeDefs = gql`
 
   type Book {
     title: String!
-    published: String!
+    published: Int!
     author: String!
     id: ID!
     genres: [String!]!
@@ -105,6 +106,21 @@ const typeDefs = gql`
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
   }
+
+  type Mutation {
+    addBook(
+      title: String!
+      published: Int!
+      author: String!
+      genres: [String!]!
+    ) : Book
+
+    editAuthor(
+      name: String!
+      setBornTo: Int!
+    ) : Author
+  }
+
 `
 
 const resolvers = {
@@ -124,13 +140,47 @@ const resolvers = {
     allAuthors: () => authors
   },
 
-  
   Author: {
     bookCount: (root) => {
       // note: find() returns an object, and filter() an array.
       const count = books.filter(b => b.author === root.name).length
       return count
     }
+  },
+
+  Mutation: {
+    addBook: (root, args) => {
+      const book = { ...args, id: uuidv4() }
+
+      if (authors.filter((author) => author.name === args.author).length === 0) {
+
+        const author = {
+          name: args.author,
+          bookCount: 1,
+          id: uuidv4()
+        }
+
+        authors = authors.concat(author)
+
+      }
+      // don't need the else statement, bookcount is calculated by scanning the array for books by author
+
+      books = books.concat(book)
+      return book
+    },
+
+    editAuthor: (root, args) => {
+      const author = authors.find(a => a.name === args.name)
+
+      if (!author) return null
+
+      author.born = args.setBornTo
+
+      authors = authors.map(a => a.id === author.id ? author : a)
+      return author
+    }
+
+
   }
 }
 
