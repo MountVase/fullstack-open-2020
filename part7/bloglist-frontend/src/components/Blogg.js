@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { likeBlog } from '../reducers/blogReducer'
-import { Link } from 'react-router-dom'
 import { addComment } from '../reducers/blogReducer'
+
+import { AnotherButton, LinkLink, Input } from '../components/styles'
 
 
 const Blogg = () => {
@@ -14,6 +15,7 @@ const Blogg = () => {
   const id = useParams().id
 
   const blog = blogs.find(blog => blog.id === id)
+
 
   const dispatch = useDispatch()
 
@@ -39,7 +41,6 @@ const Blogg = () => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: '2px solid #0dcfcf',
     borderWidth: 1,
     marginBottom: 5,
   }
@@ -74,15 +75,15 @@ const Blogg = () => {
       <div>{blog.url}</div>
       <div className="likes" id="likeAmount">
         {blog.likes}
-        <button type="button" onClick={addLike} id="likeButton">like</button>
+        <AnotherButton type="button" onClick={addLike} id="likeButton">like</AnotherButton>
       </div>
 
-      <div>added by <Link to={`/users/${blog.user.id}`}>{blog.user.name}</Link></div>
+      <div>added by <LinkLink to={`/users/${blog.user.id}`}>{blog.user.name}</LinkLink></div>
 
       <h4>comments</h4>
       <form onSubmit={addCommentToBlog}>
-        <input type="text" value={comment} onChange={event => setComment(event.target.value)}></input>
-        <button type="submit">comment</button>
+        <Input type="text" value={comment} onChange={event => setComment(event.target.value)}></Input>
+        <AnotherButton type="submit">comment</AnotherButton>
       </form>
 
       {blog.comments.map(comment => <li key={generateId()}>{comment}</li>)}

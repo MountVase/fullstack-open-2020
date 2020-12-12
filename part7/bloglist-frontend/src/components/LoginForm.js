@@ -6,6 +6,8 @@ import loginService from '../services/loginService'
 import { setUser } from '../reducers/signedInUserReducer'
 import { displayNotification } from '../reducers/notificationReducer'
 
+import { Input, Page, FinalButton, InnerContainer } from './styles'
+
 const LoginForm = () => {
 
   const [username, setUsername] = useState('')
@@ -45,31 +47,35 @@ const LoginForm = () => {
 
   // id parameters added for express testing.
   return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <div>
-        username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-            id="usernameInput"
-          />
-        </div>
-        <div>
-        password
-          <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-            id="passwordInput"
-          />
-        </div>
-        <button type="submit" id="loginButton">login</button>
-      </form>
-    </div>
+    <Page>
+      <div>
+        <form onSubmit={handleLogin}>
+          <div>
+          username
+            <Input
+              type="text"
+              value={username}
+              name="Username"
+              onChange={({ target }) => setUsername(target.value)}
+              id="usernameInput"
+            />
+          </div>
+          <div>
+          password
+            <Input
+              type="password"
+              value={password}
+              name="Password"
+              onChange={({ target }) => setPassword(target.value)}
+              id="passwordInput"
+            />
+          </div>
+          <InnerContainer>
+            <FinalButton type="submit" id="loginButton">login</FinalButton>
+          </InnerContainer>
+        </form>
+      </div>
+    </Page>
   )
 }
 

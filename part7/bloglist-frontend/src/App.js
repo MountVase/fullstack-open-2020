@@ -24,6 +24,9 @@ import {
 } from 'react-router-dom'
 
 
+import { Page, Navigation, LogoutButton , LinkLink} from './components/styles'
+import styled from 'styled-components'
+
 import './index.css'
 
 
@@ -72,34 +75,43 @@ const App = () => {
       loginform
     )
   }
-  const padding = {
-    paddingRight: 5
-  }
+
+  const StyledLink = styled(Link)`
+    padding: 0.25em 2em;
+    font-size: 1.12em;
+    color: #241D15;
+    background: #FF1E00;
+    margin-bottom: 2em;
+
+  `
 
   const Header = () => {
     return (
-      <div>
-        <Notification></Notification>
-        <h2>blogs</h2>
+      <Navigation>
         <div>
-          <Link style={padding} to="/">blogs</Link>
-          <Link style={padding} to="/users">users</Link>
-        </div>
+          <Notification></Notification>
+          <h2>blogs</h2>
+          <div>
+            <StyledLink to="/">blogs</StyledLink>
+            <StyledLink to="/users">users</StyledLink>
+          </div>
 
-        <div>{user.name} logged in
-          <button onClick={handleLogout}> logout</button>
+          <div style={ { paddingTop: '15px' } }>{user.name} logged in
+            <LogoutButton onClick={handleLogout}> logout</LogoutButton>
+          </div>
         </div>
-      </div>
+      </Navigation>
     )
   }
+
 
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: '2px solid #0dcfcf',
     borderWidth: 1,
     marginBottom: 5,
   }
+
 
   const Home = () => {
     return (
@@ -111,7 +123,7 @@ const App = () => {
         </Toggle>
 
         {sortedByLikes.map(blog =>
-          <div key={blog.id} style={blogStyle}><Link to={`/blogs/${blog.id}`}>{blog.title} by {blog.author}</Link></div>
+          <div key={blog.id} style={blogStyle}><LinkLink to={`/blogs/${blog.id}`}>{blog.title} by {blog.author}</LinkLink></div>
         )}
 
       </div>
@@ -119,26 +131,36 @@ const App = () => {
   }
 
   return (
+
     <Router>
       <Switch>
         <Route path="/users/:id">
           <Header></Header>
-          <User></User>
+          <Page>
+            <User></User>
+          </Page>
         </Route>
         <Route path="/users">
           <Header></Header>
-          <Users></Users>
+          <Page>
+            <Users></Users>
+          </Page>
         </Route>
         <Route path="/blogs/:id">
           <Header></Header>
-          <Blogg></Blogg>
+          <Page>
+            <Blogg></Blogg>
+          </Page>
         </Route>
         <Route path="/">
           <Header></Header>
-          <Home></Home>
+          <Page>
+            <Home></Home>
+          </Page>
         </Route>
       </Switch>
     </Router>
+    
   )
 }
 

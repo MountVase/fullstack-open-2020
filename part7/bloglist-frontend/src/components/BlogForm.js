@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux'
 import { displayNotification } from '../reducers/notificationReducer'
 import { createBlog } from '../reducers/blogReducer'
 
+import { BCreateButton } from '../components/styles'
+
 const BlogForm = () => {
 
   const [title, setTitle] = useState('')
@@ -74,7 +76,7 @@ const BlogForm = () => {
           ></input>
         </div>
         <div>
-          <button type="submit" id="createButton">create</button>
+          <BCreateButton type="submit" id="createButton">create</BCreateButton>
         </div>
       </form>
     </div>

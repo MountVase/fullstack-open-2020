@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { LinkLink } from '../components/styles'
 
 
 const Users = () => {
@@ -17,7 +17,7 @@ const Users = () => {
       <div style={{ display: 'grid', gridTemplateColumns: 'auto auto', gridGap: 0 }}>
         <div className="column">
           <b>name {'      '} blogs posted</b>
-          {users.map(user => <li key={user.id}><Link to={`/users/${user.id}`}>{user.name}</Link> {user.blogs.length}</li>)}
+          {users.map(user => <li key={user.id}><LinkLink to={`/users/${user.id}`}>{user.name}</LinkLink> {user.blogs.length}</li>)}
         </div>
 
 
