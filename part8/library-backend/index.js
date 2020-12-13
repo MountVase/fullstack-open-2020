@@ -152,6 +152,7 @@ const resolvers = {
 
   Mutation: {
     addBook: (root, args) => {
+      
       const book = { ...args, id: uuidv4() }
 
       if (authors.filter((author) => author.name === args.author).length === 0) {
