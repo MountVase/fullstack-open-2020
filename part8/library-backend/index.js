@@ -1,5 +1,22 @@
-const { ApolloServer, gql } = require('apollo-server')
+const { ApolloServer, gql, UserInputError } = require('apollo-server')
 const { v4: uuidv4 } = require('uuid')
+const Book = require('./models/book')
+const Author = require('./models/author')
+require('dotenv').config()
+// handling of environment variables
+const mongoose = require('mongoose')
+
+
+console.log('connecting to DBBD')
+
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
+  .then(() => {
+    console.log('connected to MongoDB')
+  })
+  .catch((error) => {
+    console.log('error connection to MongoDB:', error.message)
+  })
+
 
 let authors = [
   {
@@ -95,7 +112,7 @@ const typeDefs = gql`
   type Book {
     title: String!
     published: Int!
-    author: String!
+    author: Author!
     id: ID!
     genres: [String!]!
   }
@@ -125,8 +142,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
-    authorCount: () => authors.length,
+    bookCount: () => Book.collection.countDocuments(),
+    authorCount: () => Author.collection.countDocuments(),
     allBooks: (root, args) => {
       if (args.author) {
          return books.filter(b => b.author === args.author)
@@ -151,25 +168,25 @@ const resolvers = {
   },
 
   Mutation: {
-    addBook: (root, args) => {
+    addBook: async (root, args) => {
       
-      const book = { ...args, id: uuidv4() }
+      let author = await Author.findOne({ name: args.author })
+      let book
+      try {
+        if (author) {
+          book = new Book({ ...args, author: author._id})
+          await book.save()
+        } else {
 
-      if (authors.filter((author) => author.name === args.author).length === 0) {
-
-        const author = {
-          name: args.author,
-          bookCount: 1,
-          id: uuidv4()
+          author = new Author({ name: args.author, born: null, bookCount: 1, id: uuidv4() })
+  
+          await author.save()
+          await book.save()
         }
 
-        authors = authors.concat(author)
-
+      } catch (e) {
+        throw new UserInputError(e.message, { invalidArgs: args, })
       }
-      // don't need the else statement, bookcount is calculated by scanning the array for books by author
-
-      books = books.concat(book)
-      return book
     },
 
     editAuthor: (root, args) => {
