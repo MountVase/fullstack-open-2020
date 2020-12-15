@@ -169,7 +169,7 @@ const resolvers = {
   Query: {
     bookCount: () => Book.collection.countDocuments(),
     authorCount: () => Author.collection.countDocuments(),
-    allBooks: (root, args) => {
+    allBooks: async (root, args) => {
 
       if (args.author) {
         // graphQL processes promises (.find({})) immediately, no need for .then => 
@@ -180,10 +180,16 @@ const resolvers = {
         return Book.find({ genres: { $in: [args.genre] } }).populate('author')
       }
 
-      return Book.find({}).populate('author')
+      const books = await Book.find({}).populate('author')
+      console.log(books)
+      return books
     
     },
-    allAuthors: () => Author.find({}),
+    allAuthors: async () =>  {
+      const authors = await Author.find({})
+      console.log(authors)
+      return authors
+    },
     me: (root, args, context) => {
       return context.currentUser
     } 
@@ -234,6 +240,7 @@ const resolvers = {
       }
 
       const author = await Author.findOne({ name: args.name })
+
       console.log(author)
       if (!author) return null
 
