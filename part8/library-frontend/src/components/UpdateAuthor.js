@@ -28,7 +28,7 @@ const UpdateAuthor = () => {
         <select onChange={event => setName(event.target.value)}>
 
            {result.data.allAuthors.map(a => 
-              <option key={a.id} value={a.name} >{a.name}</option>
+              <option key={a.name} value={a.name} >{a.name}</option>
             )}
             
           </select>
