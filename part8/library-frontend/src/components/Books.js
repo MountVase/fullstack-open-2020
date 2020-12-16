@@ -1,10 +1,20 @@
-import React from 'react'
-import { useQuery } from '@apollo/client'
-import { ALL_BOOKS } from '../queries'
+import React, { useState, useEffect } from 'react'
+import { useQuery, useLazyQuery } from '@apollo/client'
+import { ALL_BOOKS, ALL_GENRES } from '../queries'
 
 const Books = (props) => {
-  
-  const result = useQuery(ALL_BOOKS)
+  const [genre, setGenre] = useState('all genres')
+
+  const genres = useQuery(ALL_GENRES)
+
+  // changing allbooks query to lazy. We can automate fetching with useEffect, but then also dispatch specific parameter
+  // queries in conditional button event handlers :DD
+  const [getBooks, result] = useLazyQuery(ALL_BOOKS)
+
+  // page works without this useEffect, but if someone adds a book, this fetches the books again :)
+  useEffect(() => {
+    getBooks()
+  }, [getBooks])
 
   if (!props.show) {
     return null
@@ -14,11 +24,28 @@ const Books = (props) => {
     return <div>loading...</div>
   }
 
-  console.log(result)
+
+  const handleGenre = (e) => {
+    const genre = e.target.value
+
+    if (genre === "all genres") {
+      getBooks()
+      setGenre(genre)
+    } else {
+
+    getBooks({ variables: { genre: genre } })
+    setGenre(genre)
+    console.log(result.data.allBooks)
+    }
+  }
+  
   return (
     <div>
       <h2>books</h2>
 
+      <p>in genre <b>{genre}</b></p>
+      <button key="mainButton" onClick={handleGenre} value="all genres"><b>all genres</b></button>
+      {genres.data.allGenres.map(g => <button key={g} onClick={handleGenre} value={g}>{g}</button>)}
       <table>
         <tbody>
           <tr>

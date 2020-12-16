@@ -20,8 +20,8 @@ export const ALL_AUTHORS = gql`
 `
 
 export const ALL_BOOKS = gql`
-  query {
-    allBooks {
+  query errything($author: String, $genre: String){
+    allBooks(author: $author, genre: $genre) {
       title
       author {
         name
@@ -31,13 +31,20 @@ export const ALL_BOOKS = gql`
   }
 `
 
+export const ALL_GENRES = gql`
+  query {
+    allGenres
+  }
+`
 
 export const ADD_BOOK = gql`
   mutation addBookToWeb($title: String!, $published: Int!, $author: String!, $genres: [String!]!) {
     addBook(title: $title, published: $published, author: $author, genres: $genres) {
       title
       published
-      author
+      author {
+        name
+      }
       id
       genres
     } 
