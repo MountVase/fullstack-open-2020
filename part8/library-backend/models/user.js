@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 require('mongoose-unique-validator')
 
 const schema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true }
+    username: { type: String, required: true, unique: true },
+    favoriteGenre: { type: String, required: true }
 })
 
 module.exports = mongoose.model('User', schema)

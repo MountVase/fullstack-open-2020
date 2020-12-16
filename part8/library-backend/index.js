@@ -135,7 +135,7 @@ const typeDefs = gql`
     authorCount: Int!
     allBooks(author: String, genre: String): [Book!]!
     allAuthors: [Author!]!
-    me: User
+    me: User!
     allGenres: [String!]!
   }
 
@@ -200,7 +200,7 @@ const resolvers = {
 
       // reduce = (accumulate, currentValue) => ...
       const genres = books.reduce((allGenres, currentBook) => {
-        
+
         currentBook.genres.forEach(genre => allGenres.add(genre))
         return allGenres
       }, new Set())
@@ -275,7 +275,8 @@ const resolvers = {
     createUser: async (root, args) => {
       try {
         const user = new User({...args})
-        return user.save()
+        await user.save()
+        return user
       } catch (e) {
         throw new UserInputError(e.message, { invalidArgs: args })
       }
