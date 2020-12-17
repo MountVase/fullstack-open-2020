@@ -8,9 +8,15 @@ const Recommended = (props) => {
   
   const meResult = useQuery(ME)
   
-  const favGenre = meResult?.data?.me.favoriteGenre
+  let favGenre
+
+  if (meResult.data) {
+    favGenre = meResult.data.me.favoriteGenre
+  } else {
+    favGenre = null
+  }
   
-  const books = useQuery(ALL_BOOKS, {variables : { genre: favGenre } })
+  const books = useQuery(ALL_BOOKS, { variables : { genre: favGenre } })
 
 
   if (!props.show) {
