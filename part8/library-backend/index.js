@@ -169,9 +169,11 @@ const resolvers = {
         throw new UserInputError(e.message, { invalidArgs: args, })
       }
 
-      pubsub.publish('BOOK_ADDED', { bookAdded: book })
+      const returnBook = await Book.findOne({ title: args.title }).populate('author')
+
+      pubsub.publish('BOOK_ADDED', { bookAdded: returnBook })
       // need to return something more than null:
-      return await Book.findOne({ title: args.title }).populate('author')
+      return returnBook
     },
 
     editAuthor: async (root, args, context) => {

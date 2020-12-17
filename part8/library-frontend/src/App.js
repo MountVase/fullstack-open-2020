@@ -4,16 +4,28 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
-import { useApolloClient } from '@apollo/client'
+import Notification from './components/Notification'
+
+import { useApolloClient, useSubscription } from '@apollo/client'
 import Recommended from './components/Recommended'
+import { BOOK_ADDED } from './queries'
 
 
 const App = () => {
   const [page, setPage] = useState('authors')
   const [token, setToken] = useState(null)
+  const [notif, setNotif] = useState(null)
+
 
   const client = useApolloClient()
 
+
+  useSubscription(BOOK_ADDED, { onSubscriptionData: ({ subscriptionData }) => {
+    setNotif(`ǹew book ${subscriptionData.data?.bookAdded.title} added`)
+    setTimeout(() => {
+      setNotif(null)
+    }, 5000)
+  } })
 
   const handleLogout = (event) => {
     setToken(null)
@@ -36,7 +48,8 @@ const App = () => {
         
       </div>
 
-      
+      <Notification message={notif}></Notification>
+
       <Authors
         show={page === 'authors'}
       />
