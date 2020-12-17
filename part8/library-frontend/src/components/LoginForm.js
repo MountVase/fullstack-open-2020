@@ -32,6 +32,7 @@ const LoginForm = (props) => {
     event.preventDefault()
 
     login({ variables: { username, password } })
+    props.setPage('authors')
   }
 
   return (
