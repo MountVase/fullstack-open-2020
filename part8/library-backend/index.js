@@ -137,9 +137,10 @@ const resolvers = {
   Author: {
     bookCount: async (root) => {
       // note: find() returns an object, and filter() an array.
-      const author = await Author.findOne({ name: root.name }).select('_id')
+      //const author = await Author.findOne({ name: root.name }).select('_id')
 
-      return Book.find({ author: author }).countDocuments()
+      //return Book.find({ author: author }).countDocuments()
+      return root.books.length
     }
   },
 
@@ -169,6 +170,7 @@ const resolvers = {
         throw new UserInputError(e.message, { invalidArgs: args, })
       }
 
+      author.books.push(book)
       const returnBook = await Book.findOne({ title: args.title }).populate('author')
 
       pubsub.publish('BOOK_ADDED', { bookAdded: returnBook })
