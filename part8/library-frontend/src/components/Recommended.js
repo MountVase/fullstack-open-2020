@@ -11,7 +11,7 @@ const Recommended = (props) => {
   let favGenre
 
   if (meResult.data) {
-    favGenre = meResult.data.me.favoriteGenre
+    favGenre = meResult.data.me?.favoriteGenre
   } else {
     favGenre = null
   }
