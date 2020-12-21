@@ -10,5 +10,26 @@ const calculateBmi = (height: number, weight: number) => {
     else if (bmi > 30) return "Obese";
 };
 
+interface bmiInput {
+    height: number;
+    weight: number;
+}
 
-console.log(calculateBmi(180, 74))
+// cannot define 2 different argsCleanups???
+const argsCleanup2 = (args: Array<string>): bmiInput => {
+    if (args.length !== 4) throw new Error('give me input: weight, height. no wait the  other way around')
+
+    const h = Number(args[2])
+    const w = Number(args[3])
+
+    if (isNaN(h) || isNaN(w)) throw new Error('get your numbers together dawg..')
+
+    return {
+        height: h,
+        weight: w
+    }
+}
+
+
+const { height, weight } = argsCleanup2(process.argv);
+console.log(calculateBmi(height, weight));
