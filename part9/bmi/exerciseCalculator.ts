@@ -34,7 +34,8 @@ const exerciseCalculator = (hours: Array<number>, target: number): exerciseOutpu
         rating = 1
         ratingDescription = `forgive yourself, move on. Eat some cheese, great aphrodisiac!`
     }
-    else if (average > target) {
+    // if (average > target)
+    else  {
         rating = 2
         ratingDescription = `good job son. You'll be as strong as me one day.`
     }
