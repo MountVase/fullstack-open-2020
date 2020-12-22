@@ -1,5 +1,5 @@
 
-interface exerciseOutput {
+export interface exerciseOutput {
     periodLength: number;
     trainingDays: number;
     success: boolean;
@@ -9,12 +9,12 @@ interface exerciseOutput {
     average: number;
 }
 
-interface exerciseInput {
+export interface exerciseInput {
     hours: Array<number>;
     target: number;
 }
 
-const exerciseCalculator = (hours: Array<number>, target: number): exerciseOutput => {
+export const calculateExercise = (hours: Array<number>, target: number): exerciseOutput => {
     const periodLength = hours.length;
     const trainingDays = hours.filter(day => day > 0).length;
 
@@ -57,7 +57,7 @@ const exerciseCalculator = (hours: Array<number>, target: number): exerciseOutpu
 
 
 
-const argsCleanup = (args: Array<string>): exerciseInput => {
+export const argsCleanup = (args: Array<string>): exerciseInput => {
     const data = args.slice(2); 
 
     if (data.length < 3) throw new Error('parameters broken bro.');
@@ -77,5 +77,5 @@ const argsCleanup = (args: Array<string>): exerciseInput => {
 
 
 
-const { hours, target } = argsCleanup(process.argv);
-console.log(exerciseCalculator(hours, target));
+// const { hours, target } = argsCleanup(process.argv);
+// console.log(calculateExercise(hours, target));
