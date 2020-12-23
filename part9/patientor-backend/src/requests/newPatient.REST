@@ -1,0 +1,10 @@
+post http://localhost:3001/api/patients
+content-type: application/json
+
+{
+   "name": "Naval Ravikant",
+    "dateOfBirth" : "1974-07-23",
+    "ssn": "690420-122Y",
+    "gender": "male",
+    "occupation": "enlightened being"
+}
