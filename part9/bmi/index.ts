@@ -1,13 +1,12 @@
 // const express = require('express');
-import express from 'express'
+import express from 'express';
 const app = express();
 
-import { calculateBmi } from './calculateBmi'
-import { calculateExercise } from './exerciseCalculator'
+import { calculateBmi } from './calculateBmi';
+import { calculateExercise } from './exerciseCalculator';
 
 
-app.use(express.json())
-
+app.use(express.json());
 
 
 app.get('/hello', (_req, res) => {
@@ -16,31 +15,32 @@ app.get('/hello', (_req, res) => {
 
 
 app.get('/bmi', (req, res) => {
-  const height = Number(req.query.height)
-  const weight = Number(req.query.weight)
+  const height = Number(req.query.height);
+  const weight = Number(req.query.weight);
 
 
   if (!isNaN(weight) && !isNaN(height)) {
-    const obj = calculateBmi(height, weight)
-    res.send(obj)
+    const obj = calculateBmi(height, weight);
+    res.send(obj);
   }
 
   else {
-    res.send({ error: 'malformatted parameters' })
+    res.send({ error: 'malformatted parameters' });
   }
 
-})
+});
 
 app.post('/exercise', (req, res) => {
   try {
-
-    const result = calculateExercise( [ ...req.body.daily_exercises ] , req.body.target )
-    return res.json(result)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { daily_exercises, target } : any = req.body 
+    const result = calculateExercise( daily_exercises, target ); 
+    return res.json(result);
 
   } catch (e) {
-    return res.json({ error: e.message })
+    return res.json({ error: e.message }); 
   }
-})
+});
 
 
 const PORT = 3003;
