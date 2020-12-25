@@ -1,10 +1,9 @@
 import { Patient, newPatient, PatientNoSocial } from '../types';
 import { uuid } from 'uuidv4';
 
-import patientData from '../data/patientsData.json';
+import patientData from '../data/patientsData';
 
-const patients: Patient[] = patientData as Patient[];
-
+const patients: Patient[] = patientData;
 
 
 const getAll = (): Patient[] => {
@@ -13,6 +12,7 @@ const getAll = (): Patient[] => {
 
 const getPatient = (id: string): Patient | undefined => {
     const p = patients.find(patient => patient.id === id);
+    console.log(p);
     return p;
 };
 
