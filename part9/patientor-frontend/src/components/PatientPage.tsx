@@ -23,13 +23,15 @@ const PatientPage: React.FC = () => {
         }
     }, [data?.patientDetail]);
     
-    const dict: any = { //eslint-disable-line
+    const genderDict: any = { //eslint-disable-line
         "male": "mars",
         "female": "venus",
         "other": "transgender alternate"
     };
 
-    const genderIcon = dict[`${data?.patientDetail?.gender}`];
+    const genderIcon = genderDict[`${data?.patientDetail?.gender}`];
+
+    const diagnosisDict: any = data?.diagnoses;
     
     return (
         <div>
@@ -48,9 +50,16 @@ const PatientPage: React.FC = () => {
              <p><b>occupation: </b>{data?.patientDetail?.occupation}</p>
              <h3>entries</h3>
              {data?.patientDetail?.entries.map(entry => {
+
+
                  return (<>
                  <p key={entry.id}>{entry.date} <i>{entry.description}</i></p>
-                 {entry.diagnosisCodes?.map(code => <li key={code}>{code}</li>)}
+                 
+                 {entry.diagnosisCodes?.map(code => {
+                    const codeDescription: string = diagnosisDict.find((d: any) => d.code === code)?.name;
+                    return (<li key={code}>{code} {codeDescription}</li>);
+                 
+                 })}
                  </>
                  );
              })}
