@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Container, Icon } from "semantic-ui-react";
+import { Divider, Container, Icon, Table } from "semantic-ui-react";
 import { useParams } from 'react-router-dom';
 import { setPatientDetails, useStateValue } from "../state";
 import axios from 'axios';
@@ -35,13 +35,25 @@ const PatientPage: React.FC = () => {
         <div>
             <Divider hidden />
             <Container>
-                <h2>{data?.patientDetail?.name}</h2>
-                <Icon name={genderIcon} size="big"/>
+                <Table celled>
+                    <Table.Row>
+                        <Table.HeaderCell><h2>{data?.patientDetail?.name}</h2></Table.HeaderCell>
+                        <Table.HeaderCell><Icon name={genderIcon} size="big"/></Table.HeaderCell>
+                    </Table.Row>
+                </Table>
              </Container>
              <Divider hidden />
 
              <p><b>ssn: </b>{data?.patientDetail?.ssn}</p>
              <p><b>occupation: </b>{data?.patientDetail?.occupation}</p>
+             <h3>entries</h3>
+             {data?.patientDetail?.entries.map(entry => {
+                 return (<>
+                 <p key={entry.id}>{entry.date} <i>{entry.description}</i></p>
+                 {entry.diagnosisCodes?.map(code => <li key={code}>{code}</li>)}
+                 </>
+                 );
+             })}
         </div>
     );
 };
