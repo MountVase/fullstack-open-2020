@@ -1,10 +1,11 @@
 import React from 'react';
-import { Divider, Container, Icon, Table } from "semantic-ui-react";
+import { Divider, Container, Icon, Grid } from "semantic-ui-react";
 import { useParams } from 'react-router-dom';
 import { setPatientDetails, useStateValue } from "../state";
 import axios from 'axios';
-import { Patient } from '../types';
+import { Diagnosis, Patient } from '../types';
 import { apiBaseUrl } from '../constants';
+import EntryDetail from './EntryDetail';
 
 const PatientPage: React.FC = () => {
 
@@ -31,18 +32,17 @@ const PatientPage: React.FC = () => {
 
     const genderIcon = genderDict[`${data?.patientDetail?.gender}`];
 
-    const diagnosisDict: any = data?.diagnoses;
+    const diagnosisDict: Diagnosis[]= data?.diagnoses;
     
     return (
         <div>
             <Divider hidden />
             <Container>
-                <Table celled>
-                    <Table.Row>
-                        <Table.HeaderCell><h2>{data?.patientDetail?.name}</h2></Table.HeaderCell>
-                        <Table.HeaderCell><Icon name={genderIcon} size="big"/></Table.HeaderCell>
-                    </Table.Row>
-                </Table>
+               <Grid columns="6">
+                <Grid.Column key="1"> <h2>{data?.patientDetail?.name}</h2></Grid.Column>
+                <Grid.Column key="2"> <Icon name={genderIcon} size="big"/></Grid.Column>
+             </Grid>   
+                   
              </Container>
              <Divider hidden />
 
@@ -50,19 +50,9 @@ const PatientPage: React.FC = () => {
              <p><b>occupation: </b>{data?.patientDetail?.occupation}</p>
              <h3>entries</h3>
              {data?.patientDetail?.entries.map(entry => {
-
-
-                 return (<>
-                 <p key={entry.id}>{entry.date} <i>{entry.description}</i></p>
-                 
-                 {entry.diagnosisCodes?.map(code => {
-                    const codeDescription: string = diagnosisDict.find((d: any) => d.code === code)?.name;
-                    return (<li key={code}>{code} {codeDescription}</li>);
-                 
-                 })}
-                 </>
-                 );
+                return (<EntryDetail entry={entry}></EntryDetail>);
              })}
+
         </div>
     );
 };
