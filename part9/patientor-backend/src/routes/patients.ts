@@ -2,10 +2,22 @@ import express from 'express';
 
 import patientService from '../services/patientService';
 import { Patient } from '../types';
-import { toNewPatient } from '../utils';
+import { toNewEntry, toNewPatient } from '../utils';
 //import { Patient , PatientNoSocial} from '../types';
 
 const router = express.Router();
+
+router.post('/:id/entries', (req, res) => {
+  try {
+    const id = req.params.id;
+    const newEntry = toNewEntry(req.body);
+
+    const newerEntry = patientService.addEntry(id ,newEntry);
+    res.json(newerEntry);
+  } catch (e) {
+    res.status(400).send(e.message); //eslint-disable-line
+  }
+});
 
 router.get('/:id', (req, res) => {
   const patient: Patient | undefined = patientService.getPatient(req.params.id);
@@ -30,7 +42,7 @@ router.post('/', (req, res) => {
 
       } catch (e) {
           
-        res.status(400).send(e.message);
+        res.status(400).send(e.message); //eslint-disable-line
         }
 });
 

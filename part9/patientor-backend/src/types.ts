@@ -7,7 +7,7 @@ export type Diagnose = {
 };
 
 
-interface BaseEntry {
+export interface BaseEntry {
     id: string;
     description: string;
     date: string;
@@ -27,7 +27,7 @@ interface BaseEntry {
     healthCheckRating: HealthCheckRating;
   }
 
-  interface sickLeave {
+  export interface SickLeave {
       startDate: string;
       endDate: string;
   }
@@ -35,17 +35,17 @@ interface BaseEntry {
   interface OccupationalHealthcareEntry extends BaseEntry {
       type: "OccupationalHealthcare";
       employerName: string;
-      sickLeave?: sickLeave;
+      sickLeave?: SickLeave;
   }
 
-  interface discharge {
+ export interface Discharge {
       date: string;
       criteria: string;
   }
 
   interface HospitalEntry extends BaseEntry {
       type: "Hospital";
-      discharge?: discharge;
+      discharge?: Discharge;
   }
   
   //OccupationalHealthCareEntry and HospitalEntry
@@ -55,6 +55,10 @@ export type Entry =
   | OccupationalHealthcareEntry
   | HealthCheckEntry;
 
+
+export type NewEntry = Omit<HospitalEntry, 'id'>
+                      | Omit<OccupationalHealthcareEntry, 'id'>
+                      | Omit<HealthCheckEntry, 'id'>;
 
 
 export type Patient = {
@@ -66,6 +70,12 @@ export type Patient = {
     occupation: string;
     entries: Entry[];
 };
+
+export enum EntryType {
+  Hospital = 'Hospital',
+  HealthCheck = 'HealthCheck',
+  OccupationalHealthcare = 'OccupationalHealthcare'
+}
 
 export enum Gender {
     Female = 'female',
