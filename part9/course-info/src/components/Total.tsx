@@ -14,7 +14,7 @@ const Total: React.FC<totalProps> = (props) => {
          <p>
         Number of exercises{" "}
         {props.courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
-      </p>§
+      </p>
     )
 }
 
