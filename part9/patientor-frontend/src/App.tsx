@@ -12,6 +12,7 @@ import PatientPage from './components/PatientPage';
 
 const App: React.FC = () => {
   const [, dispatch] = useStateValue();
+  
   React.useEffect(() => {
     axios.get<void>(`${apiBaseUrl}/ping`);
 
