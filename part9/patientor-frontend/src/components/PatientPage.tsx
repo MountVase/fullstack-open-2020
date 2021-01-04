@@ -8,7 +8,7 @@ import { apiBaseUrl } from '../constants';
 import EntryDetail from './EntryDetail';
 
 import AddEntryModal from '../AddEntryModal';
-import { NewEntry } from '../AddEntryModal/AddEntryForm';
+import { NewEntry } from '../types';
 
 const PatientPage: React.FC = () => {
 

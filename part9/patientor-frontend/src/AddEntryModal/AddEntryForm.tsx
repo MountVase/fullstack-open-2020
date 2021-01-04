@@ -4,11 +4,14 @@ import { Field, Formik, Form } from 'formik';
 
 import {  DiagnosisSelection, TextField } from '../AddPatientModal/FormField';
 
-import { Entry } from '../types';
+import { NewEntry } from '../types';
 import { useStateValue } from '../state';
 
 
-export type NewEntry = Omit<Entry, 'id'>;
+
+
+// todo, update newEntry type to support optional type specific values and check them for errors.
+
 
 interface Props {
     onCancel: () => void;
@@ -18,28 +21,27 @@ interface Props {
 export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
     const [{ diagnoses }] = useStateValue();
 
+    const [entryType, setEntryType] = React.useState<string>('OccupationalHealthcare');
+    const [healthRating, setHealthRating] = React.useState<number>(0);
 
-    // todo. add state thingy that checks what type it is
-    // then add selection form before formik to choose which to pick.
-    const [entryType, setEntryType] = React.useState<string>('Hospital');
 
     const typeSelectionForm = () => (
     <div>Please choose type of entry: 
     <select name="type of entry: " value={entryType} onChange={e => setEntryType(e.target.value)}>
+      <option value="OccupationalHealthcare">Occupational Healthcare</option>
       <option value="Hospital">Hospital</option>
       <option value="HealthCheck">Health Check</option>
-      <option value="OccupationalHealthcare">Occupational Healthcare</option>
     </select>
     </div>
     );
 
     const healthRatingSelectionForm = () => (
     <div>Please choose health rating (0-3):
-      <select name="healthrating" value={entryType}>
-        <option value="0">0 Healthy</option>
-        <option value="1">1 Low Risk</option>
-        <option value="2">2 High Risk</option>
-        <option value="3">3 Critical Risk</option>
+      <select name="healthrating" value={healthRating} onChange={e => setHealthRating(Number(e.target.value))}>
+        <option value={0}>0 Healthy</option>
+        <option value={1}>1 Low Risk</option>
+        <option value={2}>2 High Risk</option>
+        <option value={3}>3 Critical Risk</option>
       </select>
     </div>
     );
@@ -47,14 +49,12 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
 
     return (        
         <Formik
-        initialValues={ { description: "", date: "", specialist: "", type: "Hospital", diagnosisCodes: undefined } }
+        initialValues={ { description: "", date: "", type: "OccupationalHealthcare", specialist: "", diagnosisCodes: undefined, employerName: "" }}
         onSubmit={onSubmit}
         validate={values => {
             const requiredError = "Field is required";
             const errors: { [field: string]: string } = {};
-            if (!values.type) {
-                errors.type = requiredError;
-              }
+          
               if (!values.description) {
                 errors.description = requiredError;
               }
@@ -64,8 +64,7 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
               if (!values.specialist) {
                 errors.specialist = requiredError;
               }
-
-            return errors;
+              
           }}
         >
         
@@ -127,7 +126,7 @@ export const AddEntryForm: React.FC<Props> = ({ onSubmit, onCancel }) => {
               <Field
                 label="Employer"
                 placeholder="Employer name"
-                name="employer"
+                name="employerName"
                 component={TextField}
               />
 
